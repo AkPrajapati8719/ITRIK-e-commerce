@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITRIK | Premium Experience</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        steel: { 50: '#F8FAFC', 100: '#F1F5F9', 200: '#E2E8F0', 300: '#CBD5E1', 400: '#94A3B8', 500: '#64748B', 600: '#475569', 700: '#334155', 800: '#1E293B', 900: '#0F172A', 950: '#020617' },
+                        platinum: { DEFAULT: '#E5E4E2', accent: '#38BDF8' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'premium': '0 20px 50px -12px rgba(0, 0, 0, 0.25)',
+                        'glow': '0 0 20px rgba(56, 189, 248, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap');
+
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #0F172A;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(15, 23, 42, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s, left 0.15s ease-out, top 0.15s ease-out;
+        }
+
+        body.hovering .cursor-dot {
+            opacity: 0;
+        }
+
+        body.hovering .cursor-outline {
+            width: 60px;
+            height: 60px;
+            border-color: #38BDF8;
+            background-color: rgba(56, 189, 248, 0.1);
+            backdrop-filter: blur(2px);
+        }
+
+        * {
+            cursor: none !important;
+        }
+
+        /* Glass Nav */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body class="text-steel-800">
+
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal"
+        class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="absolute inset-0 bg-steel-950/80 backdrop-blur-sm" id="modal-backdrop"></div>
+        <div class="relative w-full max-w-md p-8 glass-dark rounded-3xl shadow-premium transform scale-95 transition-transform duration-300"
+            id="modal-content">
+            <button id="close-modal" class="absolute top-4 right-4 text-steel-400 hover:text-white hoverable"><i
+                    class="fa-solid fa-xmark text-2xl"></i></button>
+            <div class="text-center mb-8">
+                <i class="fa-solid fa-layer-group text-4xl text-platinum-accent mb-4"></i>
+                <h2 class="text-2xl font-bold text-white font-display">Welcome to ITRIK</h2>
+                <p class="text-steel-400 text-sm mt-2">Sign in to access premium assets</p>
+            </div>
+            <form class="space-y-4">
+                <input type="email" placeholder="Email"
+                    class="w-full bg-white/10 border border-white/10 text-white rounded-xl px-4 py-3 focus:border-platinum-accent focus:outline-none hoverable">
+                <input type="password" placeholder="Password"
+                    class="w-full bg-white/10 border border-white/10 text-white rounded-xl px-4 py-3 focus:border-platinum-accent focus:outline-none hoverable">
+                <button type="button"
+                    class="w-full bg-platinum-accent hover:bg-white hover:text-steel-900 text-steel-900 font-bold py-3 rounded-xl transition-all hoverable">LOGIN</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer"
+        class="fixed inset-y-0 right-0 w-80 bg-white shadow-2xl z-[90] transform translate-x-full transition-transform duration-300 p-6 flex flex-col">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-bold font-display">Your Cart</h2>
+            <button id="close-cart" class="text-steel-500 hover:text-steel-900 hoverable"><i
+                    class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div class="flex-1 flex items-center justify-center text-steel-400 flex-col">
+            <i class="fa-solid fa-basket-shopping text-4xl mb-4 opacity-20"></i>
+            <p>Your cart is currently empty.</p>
+        </div>
+        <button
+            class="w-full py-4 bg-steel-900 text-white font-bold rounded-xl hover:bg-platinum-accent hover:shadow-glow transition-all hoverable">CHECKOUT</button>
+    </div>
+
+    <!-- navigation bar -->
+    <nav
+        class="fixed top-5 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 rounded-full glass-nav transition-all duration-300 py-3 px-6">
+        <div class="flex justify-between items-center">
+            <a href="#" onclick="window.scrollTo(0,0); return false;"
+                class="text-2xl font-bold font-display tracking-widest text-steel-900 hoverable flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-platinum-accent"></i> ITRIK
+            </a>
+
+            <ul class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-steel-600">
+                <li><a href="#home" class="hover:text-platinum-accent transition-colors hoverable">Home</a></li>
+                <li><a href="#about" class="hover:text-platinum-accent transition-colors hoverable">About</a></li>
+                <li><a href="#products" class="hover:text-platinum-accent transition-colors hoverable">Marketplace</a>
+                </li>
+                <li><a href="#use-care" class="hover:text-platinum-accent transition-colors hoverable">Use & Care</a>
+                </li>
+                <li><a href="#contact" class="hover:text-platinum-accent transition-colors hoverable">Contact</a></li>
+            </ul>
+
+            <div class="hidden md:flex items-center gap-5">
+                <button id="cart-btn"
+                    class="relative text-steel-800 hover:text-platinum-accent transition-colors hoverable">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cart-count"
+                        class="absolute -top-1 -right-2 bg-steel-900 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <button id="login-btn"
+                    class="text-xs font-bold uppercase tracking-wider text-steel-900 hover:text-platinum-accent hoverable">Login</button>
+                <a href="#products"
+                    class="px-6 py-2 bg-steel-900 text-white text-xs font-bold uppercase rounded-full hover:bg-platinum-accent hover:shadow-glow transition-all hoverable">Shop
+                    Now</a>
+            </div>
+
+            <button id="mobile-toggle" class="md:hidden text-2xl text-steel-900 hoverable">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu"
+            class="hidden absolute top-full left-0 w-full bg-white mt-2 rounded-2xl shadow-premium p-6 flex-col space-y-4 md:hidden border border-steel-100">
+            <a href="#home"
+                class="mobile-link block text-sm font-bold uppercase text-steel-700 hover:text-platinum-accent hoverable">Home</a>
+            <a href="#about"
+                class="mobile-link block text-sm font-bold uppercase text-steel-700 hover:text-platinum-accent hoverable">About</a>
+            <a href="#products"
+                class="mobile-link block text-sm font-bold uppercase text-steel-700 hover:text-platinum-accent hoverable">Marketplace</a>
+            <a href="#contact"
+                class="mobile-link block text-sm font-bold uppercase text-steel-700 hover:text-platinum-accent hoverable">Contact</a>
+            <div class="h-px bg-steel-100 my-2"></div>
+            <button id="mobile-cart-btn"
+                class="flex items-center gap-2 text-sm font-bold uppercase text-steel-700 hoverable w-full text-left">
+                <i class="fa-solid fa-bag-shopping"></i> Cart (<span id="mobile-cart-count">0</span>)
+            </button>
+            <button id="mobile-login-btn"
+                class="w-full py-3 bg-steel-900 text-white rounded-xl uppercase font-bold text-xs hoverable">Login /
+                Register</button>
+        </div>
+    </nav>
+
+    <!-- hero section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-steel-50">
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <div
+                class="absolute top-0 right-0 w-96 h-96 bg-steel-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 w-96 h-96 bg-platinum-accent rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000">
+            </div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 items-center gap-12">
+            <div data-aos="fade-up" data-aos-duration="1000">
+                <span class="text-platinum-accent font-bold tracking-[0.3em] uppercase text-sm mb-4 block">Defined by
+                    Precision</span>
+                <h1 class="text-6xl md:text-8xl font-display font-bold text-steel-900 leading-tight mb-6">
+                    ITRIK <br> <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-steel-500 to-steel-800">DESIGN</span>
+                </h1>
+                <p class="text-steel-500 text-lg mb-8 max-w-md">Premium digital and physical assets for the modern
+                    creator.</p>
+                <div class="flex gap-4">
+                    <a href="#products"
+                        class="px-8 py-4 bg-steel-900 text-white rounded-full font-bold shadow-lg hover:shadow-premium hover:-translate-y-1 transition-all hoverable">EXPLORE
+                        COLLECTION</a>
+                </div>
+            </div>
+            <div class="relative" data-aos="zoom-in" data-aos-duration="1200">
+                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop"
+                    alt="ITRIK Hero"
+                    class="rounded-[3rem] shadow-premium object-cover h-[500px] w-full rotate-2 hover:rotate-0 transition-transform duration-700">
+            </div>
+        </div>
+    </section>
+
+    <!-- features section -->
+    <section class="py-16 bg-white border-b border-steel-100">
+        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="hoverable group" data-aos="fade-up" data-aos-delay="0"><i
+                    class="fa-solid fa-gem text-3xl text-platinum-accent mb-4 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-steel-900">Premium Materials</h3>
+            </div>
+            <div class="hoverable group" data-aos="fade-up" data-aos-delay="100"><i
+                    class="fa-solid fa-truck-fast text-3xl text-platinum-accent mb-4 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-steel-900">Global Shipping</h3>
+            </div>
+            <div class="hoverable group" data-aos="fade-up" data-aos-delay="200"><i
+                    class="fa-solid fa-shield-halved text-3xl text-platinum-accent mb-4 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-steel-900">Lifetime Warranty</h3>
+            </div>
+            <div class="hoverable group" data-aos="fade-up" data-aos-delay="300"><i
+                    class="fa-solid fa-headset text-3xl text-platinum-accent mb-4 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-steel-900">24/7 Support</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-white overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="w-full md:w-1/2 relative" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="absolute -top-4 -left-4 w-24 h-24 bg-platinum-accent/20 rounded-full blur-xl"></div>
+
+                    <div id="explosion-container"
+                        class="rounded-[2.5rem] shadow-2xl relative z-10 w-full h-[500px] bg-steel-100 overflow-hidden cursor-pointer hoverable">
+                    </div>
+
+                    <div
+                        class="absolute -bottom-10 -right-5 z-20 bg-white p-6 rounded-2xl shadow-premium border border-steel-100 max-w-xs animate-float">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-steel-900 text-white p-3 rounded-full"><i class="fa-solid fa-award"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-steel-900 text-lg">Industry Leader</h4>
+                                <p class="text-xs text-steel-500">Awarded for Design Excellence 2025</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-1/2" data-aos="fade-left" data-aos-duration="1000">
+                    <h4 class="text-platinum-accent font-bold tracking-widest uppercase mb-4">The Philosophy</h4>
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-steel-900 mb-6 leading-tight">
+                        Engineering Meets <br> <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-steel-500 to-steel-900">Aesthetics.</span>
+                    </h2>
+                    <p class="text-steel-500 text-lg leading-relaxed mb-8">
+                        At ITRIK, we believe that tools shouldn't just function—they should inspire. Born from a desire
+                        to merge industrial durability with minimalist elegance, we create products that stand the test
+                        of time.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div class="border-l-4 border-platinum-accent pl-4">
+                            <span class="block text-3xl font-bold text-steel-900">10k+</span>
+                            <span class="text-sm text-steel-500 uppercase tracking-wide">Happy Clients</span>
+                        </div>
+                        <div class="border-l-4 border-platinum-accent pl-4">
+                            <span class="block text-3xl font-bold text-steel-900">100%</span>
+                            <span class="text-sm text-steel-500 uppercase tracking-wide">Satisfaction</span>
+                        </div>
+                    </div>
+                    <a href="#contact"
+                        class="text-steel-900 font-bold border-b-2 border-platinum-accent hover:text-platinum-accent transition-colors pb-1 hoverable">
+                        Read Our Full Story <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- products section -->
+    <section id="products" class="min-h-screen flex items-center justify-center py-20 px-4 bg-steel-50">
+        <div class="container mx-auto max-w-7xl">
+
+            <div class="mb-10 flex justify-between items-end" data-aos="fade-up">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-steel-900">The Marketplace</h2>
+                    <p class="text-gray-500 mt-2">Explore our premium collection.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-auto lg:h-[700px]">
+
+                <div
+                    class="lg:col-span-8 relative h-[500px] lg:h-full rounded-[2.5rem] overflow-hidden shadow-2xl group border border-gray-200 bg-white">
+
+                    <img id="main-image" src=""
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-105">
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+
+                    <div class="absolute bottom-8 right-8 flex gap-3 z-20">
+                        <button onclick="prevProduct()"
+                            class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <button onclick="nextProduct()"
+                            class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="absolute inset-0 flex flex-col justify-end p-8 md:p-12 z-10 pointer-events-none">
+                        <div id="main-content"
+                            class="translate-y-0 opacity-100 transition-all duration-500 pointer-events-auto">
+                            <span id="main-category"
+                                class="text-platinum-accent uppercase tracking-[0.2em] text-sm font-bold mb-2 block">Category</span>
+                            <h2 id="main-title"
+                                class="text-4xl md:text-6xl font-display font-bold text-white mb-4 leading-tight">
+                                Product Name</h2>
+                            <p id="main-desc" class="text-gray-300 text-lg max-w-lg mb-6 line-clamp-2">Description...
+                            </p>
+
+                            <div class="flex items-center gap-4">
+                                <span id="main-price" class="text-2xl font-bold text-white mr-2">$0.00</span>
+                                <button onclick="addToCartCurrent()"
+                                    class="px-6 py-3 bg-white text-steel-900 font-bold rounded-full hover:bg-platinum-accent hover:text-white transition-all shadow-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-cart-plus"></i> <span id="btn-text">Add to Cart</span>
+                                </button>
+                                <a href="#checkout"
+                                    class="px-6 py-3 bg-transparent border border-white text-white font-bold rounded-full hover:bg-white hover:text-steel-900 transition-all">
+                                    Buy Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4 h-full flex flex-col gap-4 overflow-hidden">
+
+                    <div class="flex justify-between items-center px-1">
+                        <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Next Up</span>
+                        <div class="h-[1px] bg-gray-300 flex-1 ml-4"></div>
+                    </div>
+
+                    <div class="flex lg:flex-col gap-4 overflow-x-auto lg:overflow-y-auto pb-4 lg:pb-0 h-full no-scrollbar"
+                        id="product-list">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- DATA ---
+        const products = [
+            {
+                id: 1,
+                title: "ITRIK Series X",
+                price: "$299.00",
+                category: "Smart Tech",
+                desc: "The future of wrist-worn technology. Features a sapphire crystal display.",
+                image: "/images/pan.jpeg"
+            },
+            {
+                id: 2,
+                title: "Studio Audio",
+                price: "$450.00",
+                category: "High Fidelity",
+                desc: "Active noise cancellation meets studio-grade drivers for immersive listening.",
+                image: "/images/pan2.jpeg"
+            },
+            {
+                id: 3,
+                title: "Polaroid Lens",
+                price: "$129.00",
+                category: "Photography",
+                desc: "Capture the moment with vintage charm. Instant developing film camera.",
+                image: "/images/pan3.jpeg"
+            },
+            {
+                id: 4,
+                title: "LUMIX G",
+                price: "$899.00",
+                category: "Cinematic",
+                desc: "Professional grade mirrorless camera. 4K 60fps video and stunning color.",
+                image: "/images/pan4.jpeg"
+            }
+        ];
+
+        // --- ELEMENTS ---
+        const mainImage = document.getElementById('main-image');
+        const mainTitle = document.getElementById('main-title');
+        const mainCategory = document.getElementById('main-category');
+        const mainDesc = document.getElementById('main-desc');
+        const mainPrice = document.getElementById('main-price');
+        const mainContent = document.getElementById('main-content');
+        const productList = document.getElementById('product-list');
+        const btnText = document.getElementById('btn-text');
+
+        let activeIndex = 0;
+
+        // --- INIT ---
+        function initSlider() {
+            renderList();
+            updateMainView(0);
+        }
+
+        // --- RENDER THUMBNAILS ---
+        function renderList() {
+            productList.innerHTML = products.map((p, index) => `
+                <div onclick="changeProduct(${index})" 
+                     class="cursor-pointer group relative flex-shrink-0 w-[280px] lg:w-full h-[180px] rounded-2xl overflow-hidden border-2 transition-all duration-300 ${index === activeIndex ? 'border-platinum-accent ring-2 ring-platinum-accent/30 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}">
+                    
+                    <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors p-4 flex flex-col justify-end">
+                        <h4 class="text-white font-bold">${p.title}</h4>
+                        <span class="text-xs text-gray-300">${p.price}</span>
+                    </div>
+
+                    ${index === activeIndex ? '<div class="absolute top-3 right-3 w-2 h-2 rounded-full bg-platinum-accent shadow-[0_0_10px_#38BDF8]"></div>' : ''}
+                </div>
+            `).join('');
+        }
+
+        // --- LOGIC ---
+        function changeProduct(index) {
+            if (index === activeIndex) return;
+            activeIndex = index;
+
+            // Animate Out
+            gsap.to(mainContent, { opacity: 0, y: 20, duration: 0.2 });
+            gsap.to(mainImage, {
+                scale: 1.1, opacity: 0.5, duration: 0.2, onComplete: () => {
+                    updateMainView(index);
+                    renderList(); // Re-render to update active border
+
+                    // Animate In
+                    gsap.to(mainImage, { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" });
+                    gsap.to(mainContent, { opacity: 1, y: 0, duration: 0.4 });
+                }
+            });
+        }
+
+        function updateMainView(index) {
+            const p = products[index];
+            mainImage.src = p.image;
+            mainTitle.innerText = p.title;
+            mainCategory.innerText = p.category;
+            mainDesc.innerText = p.desc;
+            mainPrice.innerText = p.price;
+            btnText.innerText = "Add to Cart";
+        }
+
+        // --- NAVIGATION CONTROLS ---
+        function nextProduct() {
+            let nextIndex = (activeIndex + 1) % products.length;
+            changeProduct(nextIndex);
+            scrollThumbnail(nextIndex);
+        }
+
+        function prevProduct() {
+            let prevIndex = (activeIndex - 1 + products.length) % products.length;
+            changeProduct(prevIndex);
+            scrollThumbnail(prevIndex);
+        }
+
+        // --- FIXED SCROLL FUNCTION (Jumping Issue Fix) ---
+        function scrollThumbnail(index) {
+            const thumbnail = productList.children[index];
+
+            if (thumbnail) {
+                // Calculate position manually relative to the parent, not the window
+                const containerWidth = productList.clientWidth;
+                const thumbnailWidth = thumbnail.offsetWidth;
+                const thumbnailLeft = thumbnail.offsetLeft;
+
+                // Math to center the element
+                const scrollPos = thumbnailLeft - (containerWidth / 2) + (thumbnailWidth / 2);
+
+                productList.scrollTo({
+                    left: scrollPos,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        function addToCartCurrent() {
+            btnText.innerText = "Added!";
+            const countEl = document.getElementById('cart-count');
+            if (countEl) {
+                let count = parseInt(countEl.innerText) || 0;
+                countEl.innerText = count + 1;
+            }
+            setTimeout(() => { btnText.innerText = "Add to Cart"; }, 1500);
+        }
+
+        initSlider();
+    </script>
+
+    <!-- use & care section -->
+    <section id="use-care" class="py-24 bg-white">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row gap-16 items-center">
+            <div class="w-full md:w-1/2" data-aos="zoom-in">
+
+                <img src="https://images.unsplash.com/photo-1581093458791-9f3022543615?auto=format&fit=crop&w=2000&q=80"
+                    class="rounded-[2rem] shadow-xl w-full h-[400px] object-cover hoverable">
+            </div>
+            <div class="w-full md:w-1/2" data-aos="fade-left">
+                <h2 class="text-4xl font-display font-bold text-steel-900 mb-6">Use & Care</h2>
+                <p class="text-steel-500 mb-8 leading-relaxed">Detailed care guides included with every purchase.</p>
+                <ul class="space-y-4">
+                    <li
+                        class="flex items-center gap-4 p-4 bg-steel-50 rounded-xl hover:bg-steel-100 transition-colors hoverable">
+                        <i class="fa-solid fa-droplet text-platinum-accent"></i><span
+                            class="font-medium text-steel-700">Keep dry and clean.</span>
+                    </li>
+                    <li
+                        class="flex items-center gap-4 p-4 bg-steel-50 rounded-xl hover:bg-steel-100 transition-colors hoverable">
+                        <i class="fa-solid fa-temperature-full text-platinum-accent"></i><span
+                            class="font-medium text-steel-700">Store at room temp.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- contact section -->
+    <section id="contact" class="py-24 bg-steel-50" data-aos="fade-up">
+        <div class="container mx-auto px-6 text-center max-w-2xl">
+            <h2 class="text-4xl font-display font-bold text-steel-900 mb-6">Contact Us</h2>
+            <form class="space-y-4">
+                <input type="text" placeholder="Name"
+                    class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-platinum-accent outline-none hoverable">
+                <input type="email" placeholder="Email"
+                    class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-platinum-accent outline-none hoverable">
+                <textarea rows="4" placeholder="Message"
+                    class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-platinum-accent outline-none hoverable"></textarea>
+                <button type="button"
+                    class="px-8 py-3 bg-steel-900 text-white font-bold rounded-full hover:bg-platinum-accent transition-colors hoverable">SEND
+                    MESSAGE</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- upgrade section  -->
+    <section class="py-32 bg-steel-900 text-white relative overflow-hidden text-center" data-aos="zoom-in">
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-5xl font-display font-bold mb-8">Ready to Upgrade?</h2>
+            <a href="#products"
+                class="inline-block px-12 py-5 bg-white text-steel-900 font-bold rounded-full hover:scale-110 transition-transform hoverable">SHOP
+                NOW</a>
+        </div>
+    </section>
+
+    <!-- footer section -->
+    <footer class="bg-steel-950 text-steel-400 py-16 border-t border-steel-900">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="space-y-4">
+                <a href="#" onclick="window.scrollTo(0,0); return false;"
+                    class="text-3xl font-display font-bold text-white hover:text-platinum-accent transition-colors flex items-center gap-2 hoverable">
+                    <i class="fa-solid fa-layer-group"></i> ITRIK
+                </a>
+                <p class="text-sm leading-relaxed opacity-80">Engineered for perfection. We provide the highest quality
+                    digital and physical assets for professionals.</p>
+                <div class="flex gap-4 pt-2">
+                    <a href="#"
+                        class="w-8 h-8 rounded-full bg-steel-800 flex items-center justify-center hover:bg-platinum-accent hover:text-steel-900 transition-colors hoverable"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full bg-steel-800 flex items-center justify-center hover:bg-platinum-accent hover:text-steel-900 transition-colors hoverable"><i
+                            class="fa-brands fa-twitter"></i></a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full bg-steel-800 flex items-center justify-center hover:bg-platinum-accent hover:text-steel-900 transition-colors hoverable"><i
+                            class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Navigation</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#home" class="hover:text-platinum-accent transition-colors hoverable">Home</a></li>
+                    <li><a href="#about" class="hover:text-platinum-accent transition-colors hoverable">About Us</a>
+                    </li>
+                    <li><a href="#products"
+                            class="hover:text-platinum-accent transition-colors hoverable">Marketplace</a></li>
+                    <li><a href="#use-care" class="hover:text-platinum-accent transition-colors hoverable">Use &
+                            Care</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Support</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#contact" class="hover:text-platinum-accent transition-colors hoverable">Contact
+                            Support</a></li>
+                    <li><a href="#" class="hover:text-platinum-accent transition-colors hoverable">FAQ</a></li>
+                    <li><a href="#" class="hover:text-platinum-accent transition-colors hoverable">Shipping &
+                            Returns</a></li>
+                    <li><a href="#" class="hover:text-platinum-accent transition-colors hoverable">Privacy Policy</a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Get in Touch</h4>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-location-dot mt-1 text-platinum-accent"></i>
+                        <span>123 Innovation Blvd,<br>Design District, NY 10012</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-phone text-platinum-accent"></i>
+                        <span>+1 (555) 987-6543</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-envelope text-platinum-accent"></i>
+                        <span>hello@itrik.com</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 mt-12 pt-8 border-t border-steel-900 text-center text-xs opacity-50">
+            &copy; 2026 ITRIK Industries. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- custom scripts -->
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true, mirror: false, offset: 120 });
+        window.addEventListener('load', AOS.refresh);
+
+        // --- INTERACTION LOGIC ---
+        // 1. Mobile Menu
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden'); mobileMenu.classList.toggle('flex');
+            const icon = mobileToggle.querySelector('i');
+            icon.classList.toggle('fa-bars-staggered'); icon.classList.toggle('fa-xmark');
+        }
+        mobileToggle.addEventListener('click', toggleMobileMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMobileMenu));
+
+        // 2. Login Modal
+        const modal = document.getElementById('auth-modal');
+        const btns = [document.getElementById('login-btn'), document.getElementById('mobile-login-btn')];
+        const closeBtn = document.getElementById('close-modal');
+        function toggleModal(show) {
+            if (show) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.querySelector('div[id="modal-content"]').classList.remove('scale-95');
+                if (!mobileMenu.classList.contains('hidden')) toggleMobileMenu();
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modal.querySelector('div[id="modal-content"]').classList.add('scale-95');
+            }
+        }
+        btns.forEach(b => b?.addEventListener('click', () => toggleModal(true)));
+        closeBtn.addEventListener('click', () => toggleModal(false));
+        document.getElementById('modal-backdrop').addEventListener('click', () => toggleModal(false));
+
+        // 3. Cart Drawer
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartBtns = [document.getElementById('cart-btn'), document.getElementById('mobile-cart-btn')];
+        const closeCart = document.getElementById('close-cart');
+        let cartCount = 0;
+        function toggleCart(show) {
+            if (show) {
+                cartDrawer.classList.remove('translate-x-full');
+                if (!mobileMenu.classList.contains('hidden')) toggleMobileMenu();
+            } else { cartDrawer.classList.add('translate-x-full'); }
+        }
+        cartBtns.forEach(b => b?.addEventListener('click', () => toggleCart(true)));
+        closeCart.addEventListener('click', () => toggleCart(false));
+
+        // 4. Add to Cart
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                cartCount++;
+                document.getElementById('cart-count').innerText = cartCount;
+                document.getElementById('mobile-cart-count').innerText = cartCount;
+                this.innerHTML = '<i class="fa-solid fa-check"></i>';
+                this.classList.add('bg-platinum-accent', 'text-steel-900');
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fa-solid fa-plus"></i>';
+                    this.classList.remove('bg-platinum-accent', 'text-steel-900');
+                }, 1000);
+            });
+        });
+
+        // 5. Custom Cursor
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX; const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
+            cursorOutline.style.left = `${posX}px`; cursorOutline.style.top = `${posY}px`;
+            if (e.target.closest('.hoverable, a, button, input')) { document.body.classList.add('hovering'); }
+            else { document.body.classList.remove('hovering'); }
+        });
+
+        // ----------------------------------------------------
+        // 6. THREE.JS EXPLOSION ANIMATION (Integrated for Pan)
+        // ----------------------------------------------------
+
+        // Settings
+        const IMAGE_URL = '../images/pan.jpeg'; // YOUR LOCAL IMAGE
+        const FALLBACK_URL = 'https://images.unsplash.com/photo-1585514697208-86d34b413247?q=80&w=800&auto=format&fit=crop'; // Just in case local fails
+
+        const GRID_SIZE = 14;
+        const EXPLODE_DIST = 400;
+        const WAIT_TIME = 2;
+        const ANIM_SPEED = 2.5;
+
+        const container = document.getElementById('explosion-container');
+
+        if (container) {
+            // Init Scene
+            const scene = new THREE.Scene();
+            // IMPORTANT: Camera aspect ratio based on CONTAINER, not Window
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 2000);
+            camera.position.z = 120; // Adjust zoom to fit the pan
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // Light
+            scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+            const light = new THREE.DirectionalLight(0xffffff, 1);
+            light.position.set(10, 10, 50);
+            scene.add(light);
+
+            // Texture
+            const textureLoader = new THREE.TextureLoader();
+
+            // Try loading local image, fallback to online if it fails
+            textureLoader.load(
+                IMAGE_URL,
+                (texture) => { initShards(texture); },
+                undefined,
+                () => {
+                    console.log("Local image not found, using fallback.");
+                    textureLoader.load(FALLBACK_URL, (texture) => initShards(texture));
+                }
+            );
+
+            function initShards(texture) {
+                texture.center.set(0.5, 0.5); // Center texture
+                const group = new THREE.Group();
+
+                // Scale grid to fit container view
+                const totalW = 140;
+                const totalH = 140;
+                const stepX = totalW / GRID_SIZE;
+                const stepY = totalH / GRID_SIZE;
+                const shards = [];
+
+                for (let i = 0; i < GRID_SIZE; i++) {
+                    for (let j = 0; j < GRID_SIZE; j++) {
+                        const geometry = new THREE.BoxGeometry(stepX, stepY, 2);
+                        const uvs = geometry.attributes.uv.array;
+                        for (let k = 0; k < uvs.length; k += 2) {
+                            uvs[k] = (i + uvs[k]) / GRID_SIZE;
+                            uvs[k + 1] = (j + uvs[k + 1]) / GRID_SIZE;
+                        }
+                        const material = new THREE.MeshStandardMaterial({ map: texture });
+                        const mesh = new THREE.Mesh(geometry, material);
+
+                        // Position Logic
+                        const homeX = (i - GRID_SIZE / 2) * stepX + (stepX / 2);
+                        const homeY = (j - GRID_SIZE / 2) * stepY + (stepY / 2);
+                        const homeZ = 0;
+                        const awayX = homeX + (Math.random() - 0.5) * EXPLODE_DIST;
+                        const awayY = homeY + (Math.random() - 0.5) * EXPLODE_DIST;
+                        const awayZ = (Math.random() - 0.5) * EXPLODE_DIST;
+
+                        mesh.position.set(homeX, homeY, homeZ);
+                        group.add(mesh);
+
+                        shards.push({
+                            mesh: mesh,
+                            home: { x: homeX, y: homeY, z: homeZ },
+                            away: { x: awayX, y: awayY, z: awayZ, rx: Math.random() * 6, ry: Math.random() * 6 }
+                        });
+                    }
+                }
+                scene.add(group);
+
+                // GSAP Animation Loop
+                const tl = gsap.timeline({ repeat: -1, repeatDelay: 0 });
+                tl.to({}, { duration: WAIT_TIME })
+                    .to(shards.map(s => s.mesh.position), { x: i => shards[i].away.x, y: i => shards[i].away.y, z: i => shards[i].away.z, duration: ANIM_SPEED, ease: "power3.out" }, "explode")
+                    .to(shards.map(s => s.mesh.rotation), { x: i => shards[i].away.rx, y: i => shards[i].away.ry, duration: ANIM_SPEED, ease: "power3.out" }, "explode")
+                    .to({}, { duration: WAIT_TIME })
+                    .to(shards.map(s => s.mesh.position), { x: i => shards[i].home.x, y: i => shards[i].home.y, z: i => shards[i].home.z, duration: ANIM_SPEED, ease: "power3.inOut" }, "assemble")
+                    .to(shards.map(s => s.mesh.rotation), { x: 0, y: 0, duration: ANIM_SPEED, ease: "power3.inOut" }, "assemble");
+
+                // Gentle Float
+                gsap.to(group.rotation, { y: 0.2, duration: 8, yoyo: true, repeat: -1, ease: "sine.inOut" });
+            }
+
+            // Handle Container Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+    </script>
+</body>
+
+</html>
