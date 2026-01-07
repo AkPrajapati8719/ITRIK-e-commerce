@@ -4,14 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITRIK | Premium Experience</title>
+    <title>ITRIK | Earthy Elegance</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
@@ -20,16 +17,21 @@
             theme: {
                 extend: {
                     colors: {
-                        steel: { 50: '#F8FAFC', 100: '#F1F5F9', 200: '#E2E8F0', 300: '#CBD5E1', 400: '#94A3B8', 500: '#64748B', 600: '#475569', 700: '#334155', 800: '#1E293B', 900: '#0F172A', 950: '#020617' },
-                        platinum: { DEFAULT: '#E5E4E2', accent: '#38BDF8' }
+                        earth: {
+                            base: '#E0D9D3',      // Bone / Light Greige (Main BG)
+                            taupe: '#918574',     // Warm Grey (Borders/Secondary)
+                            brass: '#AA9371',     // Antique Brass (Primary Accent/Action)
+                            walnut: '#524639',    // Dark Walnut (Secondary Text)
+                            charcoal: '#171614',  // Soft Black (Primary Text/Footer)
+                        }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         display: ['Playfair Display', 'serif'],
                     },
                     boxShadow: {
-                        'premium': '0 20px 50px -12px rgba(0, 0, 0, 0.25)',
-                        'glow': '0 0 20px rgba(56, 189, 248, 0.5)',
+                        'premium': '0 25px 50px -12px rgba(82, 70, 57, 0.25)', // Brownish shadow
+                        'glow': '0 0 25px rgba(170, 147, 113, 0.4)', // Brass glow
                     }
                 }
             }
@@ -37,14 +39,35 @@
     </script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;700&display=swap');
 
         html,
         body {
             overflow-x: hidden;
             width: 100%;
             font-family: 'Inter', sans-serif;
-            background-color: #F8FAFC;
+            background-color: #E0D9D3;
+            /* Base Color Applied */
+            color: #171614;
+            /* Charcoal Text */
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #E0D9D3;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #918574;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #524639;
         }
 
         /* Custom Cursor */
@@ -62,14 +85,14 @@
         .cursor-dot {
             width: 8px;
             height: 8px;
-            background-color: #0F172A;
+            background-color: #171614;
         }
 
         .cursor-outline {
             width: 40px;
             height: 40px;
-            border: 1px solid rgba(15, 23, 42, 0.5);
-            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s, left 0.15s ease-out, top 0.15s ease-out;
+            border: 1px solid rgba(23, 22, 20, 0.3);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
         }
 
         body.hovering .cursor-dot {
@@ -79,8 +102,9 @@
         body.hovering .cursor-outline {
             width: 60px;
             height: 60px;
-            border-color: #38BDF8;
-            background-color: rgba(56, 189, 248, 0.1);
+            border-color: #AA9371;
+            /* Brass Border */
+            background-color: rgba(170, 147, 113, 0.1);
             backdrop-filter: blur(2px);
         }
 
@@ -88,233 +112,263 @@
             cursor: none !important;
         }
 
-        /* Glass Nav */
+        /* Glass Nav - Warm Tint */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(224, 217, 211, 0.85);
+            /* E0D9D3 with opacity */
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
 
         .glass-dark {
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(23, 22, 20, 0.95);
+            /* Charcoal */
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(145, 133, 116, 0.2);
         }
 
-        html {
-            scroll-behavior: smooth;
+        /* Animation Utilities */
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+
+        /* Hide Scrollbar for carousel */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
 
-<body class="text-steel-800">
+<body class="text-earth-charcoal selection:bg-earth-brass selection:text-white">
 
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
 
-    <!-- Auth Modal -->
     <div id="auth-modal"
         class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="absolute inset-0 bg-steel-950/80 backdrop-blur-sm" id="modal-backdrop"></div>
+        <div class="absolute inset-0 bg-earth-charcoal/80 backdrop-blur-sm" id="modal-backdrop"></div>
         <div class="relative w-full max-w-md p-8 glass-dark rounded-3xl shadow-premium transform scale-95 transition-transform duration-300"
             id="modal-content">
-            <button id="close-modal" class="absolute top-4 right-4 text-steel-400 hover:text-white hoverable"><i
+            <button id="close-modal" class="absolute top-4 right-4 text-earth-taupe hover:text-white hoverable"><i
                     class="fa-solid fa-xmark text-2xl"></i></button>
             <div class="text-center mb-8">
-                <i class="fa-solid fa-layer-group text-4xl text-platinum-accent mb-4"></i>
+                <i class="fa-solid fa-layer-group text-4xl text-earth-brass mb-4"></i>
                 <h2 class="text-2xl font-bold text-white font-display">Welcome to ITRIK</h2>
-                <p class="text-steel-400 text-sm mt-2">Sign in to access premium assets</p>
+                <p class="text-earth-taupe text-sm mt-2">Sign in to access premium assets</p>
             </div>
             <form class="space-y-4">
                 <input type="email" placeholder="Email"
-                    class="w-full bg-white/10 border border-white/10 text-white rounded-xl px-4 py-3 focus:border-platinum-accent focus:outline-none hoverable">
+                    class="w-full bg-white/5 border border-earth-taupe/30 text-white rounded-xl px-4 py-3 focus:border-earth-brass focus:outline-none hoverable placeholder-earth-taupe">
                 <input type="password" placeholder="Password"
-                    class="w-full bg-white/10 border border-white/10 text-white rounded-xl px-4 py-3 focus:border-platinum-accent focus:outline-none hoverable">
+                    class="w-full bg-white/5 border border-earth-taupe/30 text-white rounded-xl px-4 py-3 focus:border-earth-brass focus:outline-none hoverable placeholder-earth-taupe">
                 <button type="button"
-                    class="w-full bg-platinum-accent hover:bg-white hover:text-steel-900 text-steel-900 font-bold py-3 rounded-xl transition-all hoverable">LOGIN</button>
+                    class="w-full bg-earth-brass hover:bg-white hover:text-earth-charcoal text-white font-bold py-3 rounded-xl transition-all hoverable">LOGIN</button>
             </form>
         </div>
     </div>
 
-    <!-- Cart Drawer -->
     <div id="cart-drawer"
-        class="fixed inset-y-0 right-0 w-80 bg-white shadow-2xl z-[90] transform translate-x-full transition-transform duration-300 p-6 flex flex-col">
+        class="fixed inset-y-0 right-0 w-80 bg-earth-base shadow-2xl z-[90] transform translate-x-full transition-transform duration-300 p-6 flex flex-col border-l border-earth-taupe">
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-xl font-bold font-display">Your Cart</h2>
-            <button id="close-cart" class="text-steel-500 hover:text-steel-900 hoverable"><i
+            <h2 class="text-xl font-bold font-display text-earth-charcoal">Your Cart</h2>
+            <button id="close-cart" class="text-earth-walnut hover:text-earth-charcoal hoverable"><i
                     class="fa-solid fa-xmark text-xl"></i></button>
         </div>
-        <div class="flex-1 flex items-center justify-center text-steel-400 flex-col">
-            <i class="fa-solid fa-basket-shopping text-4xl mb-4 opacity-20"></i>
+        <div class="flex-1 flex items-center justify-center text-earth-walnut flex-col">
+            <i class="fa-solid fa-basket-shopping text-4xl mb-4 opacity-40 text-earth-taupe"></i>
             <p>Your cart is currently empty.</p>
         </div>
         <button
-            class="w-full py-4 bg-steel-900 text-white font-bold rounded-xl hover:bg-platinum-accent hover:shadow-glow transition-all hoverable">CHECKOUT</button>
+            class="w-full py-4 bg-earth-charcoal text-white font-bold rounded-xl hover:bg-earth-brass hover:shadow-glow transition-all hoverable">CHECKOUT</button>
     </div>
 
-    <!-- navigation bar -->
     <nav
         class="fixed top-5 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 rounded-full glass-nav transition-all duration-300 py-3 px-6">
         <div class="flex justify-between items-center">
             <a href="#" onclick="window.scrollTo(0,0); return false;"
-                class="text-2xl font-bold font-display tracking-widest text-steel-900 hoverable flex items-center gap-2">
-                <i class="fa-solid fa-layer-group text-platinum-accent"></i> ITRIK
+                class="text-2xl font-bold font-display tracking-widest text-earth-charcoal hoverable flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-earth-brass"></i> ITRIK
             </a>
 
-            <ul class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-steel-600">
-                <li><a href="#home" class="hover:text-platinum-accent transition-colors hoverable">Home</a></li>
-                <li><a href="#about" class="hover:text-platinum-accent transition-colors hoverable">About</a></li>
-                <li><a href="#products" class="hover:text-platinum-accent transition-colors hoverable">Marketplace</a>
+            <ul class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-earth-walnut">
+                <li><a href="#home" class="hover:text-earth-brass transition-colors hoverable">Home</a></li>
+                <li><a href="#about" class="hover:text-earth-brass transition-colors hoverable">About</a></li>
+                <li><a href="#products" class="hover:text-earth-brass transition-colors hoverable">Collection</a>
                 </li>
-                <li><a href="#use-care" class="hover:text-platinum-accent transition-colors hoverable">Use & Care</a>
+                <li><a href="#use-care" class="hover:text-earth-brass transition-colors hoverable">Care</a>
                 </li>
-                <li><a href="#contact" class="hover:text-platinum-accent transition-colors hoverable">Contact</a></li>
+                <li><a href="#contact" class="hover:text-earth-brass transition-colors hoverable">Contact</a></li>
             </ul>
 
             <div class="hidden md:flex items-center gap-5">
                 <button id="cart-btn"
-                    class="relative text-steel-800 hover:text-platinum-accent transition-colors hoverable">
+                    class="relative text-earth-charcoal hover:text-earth-brass transition-colors hoverable">
                     <i class="fa-solid fa-bag-shopping text-xl"></i>
                     <span id="cart-count"
-                        class="absolute -top-1 -right-2 bg-steel-900 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                        class="absolute -top-1 -right-2 bg-earth-brass text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
                 </button>
                 <button id="login-btn"
-                    class="text-xs font-bold uppercase tracking-wider text-steel-900 hover:text-platinum-accent hoverable">Login</button>
+                    class="text-xs font-bold uppercase tracking-wider text-earth-charcoal hover:text-earth-brass hoverable">Login</button>
                 <a href="#products"
-                    class="px-6 py-2 bg-steel-900 text-white text-xs font-bold uppercase rounded-full hover:bg-platinum-accent hover:shadow-glow transition-all hoverable">Shop
+                    class="px-6 py-2 bg-earth-charcoal text-white text-xs font-bold uppercase rounded-full hover:bg-earth-brass hover:shadow-glow transition-all hoverable">Shop
                     Now</a>
             </div>
 
-            <button id="mobile-toggle" class="md:hidden text-2xl text-steel-900 hoverable">
+            <button id="mobile-toggle" class="md:hidden text-2xl text-earth-charcoal hoverable">
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
         </div>
 
         <div id="mobile-menu"
-            class="hidden absolute top-full left-0 w-full bg-white mt-2 rounded-2xl shadow-premium p-6 flex-col space-y-4 md:hidden border border-steel-100">
+            class="hidden absolute top-full left-0 w-full bg-earth-base mt-2 rounded-2xl shadow-premium p-6 flex-col space-y-4 md:hidden border border-earth-taupe/30">
             <a href="#home"
-                class="mobile-link block text-sm font-bold uppercase text-steel-700 hover:text-platinum-accent hoverable">Home</a>
+                class="mobile-link block text-sm font-bold uppercase text-earth-walnut hover:text-earth-brass hoverable">Home</a>
             <a href="#about"
-                class="mobile-link block text-sm font-bold uppercase text-steel-700 hover:text-platinum-accent hoverable">About</a>
+                class="mobile-link block text-sm font-bold uppercase text-earth-walnut hover:text-earth-brass hoverable">About</a>
             <a href="#products"
-                class="mobile-link block text-sm font-bold uppercase text-steel-700 hover:text-platinum-accent hoverable">Marketplace</a>
+                class="mobile-link block text-sm font-bold uppercase text-earth-walnut hover:text-earth-brass hoverable">Collection</a>
             <a href="#contact"
-                class="mobile-link block text-sm font-bold uppercase text-steel-700 hover:text-platinum-accent hoverable">Contact</a>
-            <div class="h-px bg-steel-100 my-2"></div>
+                class="mobile-link block text-sm font-bold uppercase text-earth-walnut hover:text-earth-brass hoverable">Contact</a>
+            <div class="h-px bg-earth-taupe/20 my-2"></div>
             <button id="mobile-cart-btn"
-                class="flex items-center gap-2 text-sm font-bold uppercase text-steel-700 hoverable w-full text-left">
+                class="flex items-center gap-2 text-sm font-bold uppercase text-earth-walnut hoverable w-full text-left">
                 <i class="fa-solid fa-bag-shopping"></i> Cart (<span id="mobile-cart-count">0</span>)
             </button>
             <button id="mobile-login-btn"
-                class="w-full py-3 bg-steel-900 text-white rounded-xl uppercase font-bold text-xs hoverable">Login /
+                class="w-full py-3 bg-earth-charcoal text-white rounded-xl uppercase font-bold text-xs hoverable">Login
+                /
                 Register</button>
         </div>
     </nav>
 
-    <!-- hero section -->
-    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-steel-50">
-        <div class="absolute inset-0 opacity-10 pointer-events-none">
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-earth-base">
+        <div class="absolute inset-0 opacity-20 pointer-events-none">
             <div
-                class="absolute top-0 right-0 w-96 h-96 bg-steel-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob">
+                class="absolute top-0 right-0 w-96 h-96 bg-earth-taupe rounded-full mix-blend-multiply filter blur-3xl animate-blob">
             </div>
             <div
-                class="absolute bottom-0 left-0 w-96 h-96 bg-platinum-accent rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000">
+                class="absolute bottom-0 left-0 w-96 h-96 bg-earth-brass rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000">
             </div>
         </div>
         <div class="container mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 items-center gap-12">
             <div data-aos="fade-up" data-aos-duration="1000">
-                <span class="text-platinum-accent font-bold tracking-[0.3em] uppercase text-sm mb-4 block">Defined by
-                    Precision</span>
-                <h1 class="text-6xl md:text-8xl font-display font-bold text-steel-900 leading-tight mb-6">
+                <span class="text-earth-brass font-bold tracking-[0.3em] uppercase text-sm mb-4 block">Earthy &
+                    Elegant</span>
+                <h1 class="text-6xl md:text-8xl font-display font-bold text-earth-charcoal leading-tight mb-6">
                     ITRIK <br> <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-steel-500 to-steel-800">DESIGN</span>
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-earth-taupe to-earth-brass">STUDIO</span>
                 </h1>
-                <p class="text-steel-500 text-lg mb-8 max-w-md">Premium digital and physical assets for the modern
-                    creator.</p>
+                <p class="text-earth-walnut text-lg mb-8 max-w-md">Curated aesthetics for the modern professional.
+                    Merging organic textures with digital precision.</p>
                 <div class="flex gap-4">
                     <a href="#products"
-                        class="px-8 py-4 bg-steel-900 text-white rounded-full font-bold shadow-lg hover:shadow-premium hover:-translate-y-1 transition-all hoverable">EXPLORE
+                        class="px-8 py-4 bg-earth-charcoal text-white rounded-full font-bold shadow-lg hover:shadow-premium hover:bg-earth-brass hover:-translate-y-1 transition-all hoverable">EXPLORE
                         COLLECTION</a>
                 </div>
             </div>
             <div class="relative" data-aos="zoom-in" data-aos-duration="1200">
-                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop"
+                <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=2000&auto=format&fit=crop"
                     alt="ITRIK Hero"
-                    class="rounded-[3rem] shadow-premium object-cover h-[500px] w-full rotate-2 hover:rotate-0 transition-transform duration-700">
+                    class="rounded-[3rem] shadow-premium object-cover h-[500px] w-full rotate-2 hover:rotate-0 transition-transform duration-700 grayscale-[20%] sepia-[20%]">
             </div>
         </div>
     </section>
 
-    <!-- features section -->
-    <section class="py-16 bg-white border-b border-steel-100">
+    <section class="py-16 bg-[#E8E2DD] border-b border-earth-taupe/20">
         <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div class="hoverable group" data-aos="fade-up" data-aos-delay="0"><i
-                    class="fa-solid fa-gem text-3xl text-platinum-accent mb-4 group-hover:scale-110 transition-transform"></i>
-                <h3 class="font-bold text-steel-900">Premium Materials</h3>
+                    class="fa-solid fa-gem text-3xl text-earth-brass mb-4 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-earth-charcoal">Premium Material</h3>
             </div>
             <div class="hoverable group" data-aos="fade-up" data-aos-delay="100"><i
-                    class="fa-solid fa-truck-fast text-3xl text-platinum-accent mb-4 group-hover:scale-110 transition-transform"></i>
-                <h3 class="font-bold text-steel-900">Global Shipping</h3>
+                    class="fa-solid fa-truck-fast text-3xl text-earth-brass mb-4 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-earth-charcoal">Global Shipping</h3>
             </div>
             <div class="hoverable group" data-aos="fade-up" data-aos-delay="200"><i
-                    class="fa-solid fa-shield-halved text-3xl text-platinum-accent mb-4 group-hover:scale-110 transition-transform"></i>
-                <h3 class="font-bold text-steel-900">Lifetime Warranty</h3>
+                    class="fa-solid fa-leaf text-3xl text-earth-brass mb-4 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-earth-charcoal">Eco Conscious</h3>
             </div>
             <div class="hoverable group" data-aos="fade-up" data-aos-delay="300"><i
-                    class="fa-solid fa-headset text-3xl text-platinum-accent mb-4 group-hover:scale-110 transition-transform"></i>
-                <h3 class="font-bold text-steel-900">24/7 Support</h3>
+                    class="fa-solid fa-headset text-3xl text-earth-brass mb-4 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-earth-charcoal">Concierge Support</h3>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-32 bg-white overflow-hidden">
+    <section id="about" class="py-32 bg-earth-base overflow-hidden">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center gap-16">
                 <div class="w-full md:w-1/2 relative" data-aos="fade-right" data-aos-duration="1000">
-                    <div class="absolute -top-4 -left-4 w-24 h-24 bg-platinum-accent/20 rounded-full blur-xl"></div>
+                    <div class="absolute -top-4 -left-4 w-24 h-24 bg-earth-brass/20 rounded-full blur-xl"></div>
 
                     <div id="explosion-container"
-                        class="rounded-[2.5rem] shadow-2xl relative z-10 w-full h-[500px] bg-steel-100 overflow-hidden cursor-pointer hoverable">
+                        class="rounded-[2.5rem] shadow-premium relative z-10 w-full h-[500px] bg-[#D6CDC5] overflow-hidden cursor-pointer hoverable">
                     </div>
 
                     <div
-                        class="absolute -bottom-10 -right-5 z-20 bg-white p-6 rounded-2xl shadow-premium border border-steel-100 max-w-xs animate-float">
+                        class="absolute -bottom-10 -right-5 z-20 bg-[#F5F2EF] p-6 rounded-2xl shadow-premium border border-earth-taupe/20 max-w-xs animate-float">
                         <div class="flex items-center gap-4">
-                            <div class="bg-steel-900 text-white p-3 rounded-full"><i class="fa-solid fa-award"></i>
+                            <div class="bg-earth-charcoal text-white p-3 rounded-full"><i class="fa-solid fa-award"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-steel-900 text-lg">Industry Leader</h4>
-                                <p class="text-xs text-steel-500">Awarded for Design Excellence 2025</p>
+                                <h4 class="font-bold text-earth-charcoal text-lg">Design Excellence</h4>
+                                <p class="text-xs text-earth-walnut">Awarded for Organic Design 2026</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="w-full md:w-1/2" data-aos="fade-left" data-aos-duration="1000">
-                    <h4 class="text-platinum-accent font-bold tracking-widest uppercase mb-4">The Philosophy</h4>
-                    <h2 class="text-4xl md:text-5xl font-display font-bold text-steel-900 mb-6 leading-tight">
-                        Engineering Meets <br> <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-steel-500 to-steel-900">Aesthetics.</span>
+                    <h4 class="text-earth-brass font-bold tracking-widest uppercase mb-4">The Philosophy</h4>
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-earth-charcoal mb-6 leading-tight">
+                        Nature Meets <br> <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-earth-taupe to-earth-charcoal">Innovation.</span>
                     </h2>
-                    <p class="text-steel-500 text-lg leading-relaxed mb-8">
-                        At ITRIK, we believe that tools shouldn't just function—they should inspire. Born from a desire
-                        to merge industrial durability with minimalist elegance, we create products that stand the test
-                        of time.
+                    <p class="text-earth-walnut text-lg leading-relaxed mb-8">
+                        At ITRIK, we strip away the unnecessary. Our palette is drawn from the earth—Brass, Walnut, and
+                        Stone—engineered
+                        into tools that feel as good as they look.
                     </p>
                     <div class="grid grid-cols-2 gap-6 mb-8">
-                        <div class="border-l-4 border-platinum-accent pl-4">
-                            <span class="block text-3xl font-bold text-steel-900">10k+</span>
-                            <span class="text-sm text-steel-500 uppercase tracking-wide">Happy Clients</span>
+                        <div class="border-l-4 border-earth-brass pl-4">
+                            <span class="block text-3xl font-bold text-earth-charcoal">10k+</span>
+                            <span class="text-sm text-earth-walnut uppercase tracking-wide">Artisans</span>
                         </div>
-                        <div class="border-l-4 border-platinum-accent pl-4">
-                            <span class="block text-3xl font-bold text-steel-900">100%</span>
-                            <span class="text-sm text-steel-500 uppercase tracking-wide">Satisfaction</span>
+                        <div class="border-l-4 border-earth-brass pl-4">
+                            <span class="block text-3xl font-bold text-earth-charcoal">100%</span>
+                            <span class="text-sm text-earth-walnut uppercase tracking-wide">Sustainable</span>
                         </div>
                     </div>
                     <a href="#contact"
-                        class="text-steel-900 font-bold border-b-2 border-platinum-accent hover:text-platinum-accent transition-colors pb-1 hoverable">
+                        class="text-earth-charcoal font-bold border-b-2 border-earth-brass hover:text-earth-brass transition-colors pb-1 hoverable">
                         Read Our Full Story <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
                 </div>
@@ -322,34 +376,33 @@
         </div>
     </section>
 
-    <!-- products section -->
-    <section id="products" class="min-h-screen flex items-center justify-center py-20 px-4 bg-steel-50">
+    <section id="products" class="min-h-screen flex items-center justify-center py-20 px-4 bg-[#D6CDC5]">
         <div class="container mx-auto max-w-7xl">
 
             <div class="mb-10 flex justify-between items-end" data-aos="fade-up">
                 <div>
-                    <h2 class="text-4xl md:text-5xl font-display font-bold text-steel-900">The Marketplace</h2>
-                    <p class="text-gray-500 mt-2">Explore our premium collection.</p>
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-earth-charcoal">The Collection</h2>
+                    <p class="text-earth-walnut mt-2">Explore our premium selection.</p>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-auto lg:h-[700px]">
 
                 <div
-                    class="lg:col-span-8 relative h-[500px] lg:h-full rounded-[2.5rem] overflow-hidden shadow-2xl group border border-gray-200 bg-white">
+                    class="lg:col-span-8 relative h-[500px] lg:h-full rounded-[2.5rem] overflow-hidden shadow-2xl group border border-earth-taupe/20 bg-earth-charcoal">
 
                     <img id="main-image" src=""
-                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-105">
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-105 opacity-90">
 
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#171614] via-[#171614]/40 to-transparent"></div>
 
                     <div class="absolute bottom-8 right-8 flex gap-3 z-20">
                         <button onclick="prevProduct()"
-                            class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                            class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-earth-brass hover:border-earth-brass hover:text-white transition-all">
                             <i class="fa-solid fa-arrow-left"></i>
                         </button>
                         <button onclick="nextProduct()"
-                            class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                            class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-earth-brass hover:border-earth-brass hover:text-white transition-all">
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
@@ -358,7 +411,7 @@
                         <div id="main-content"
                             class="translate-y-0 opacity-100 transition-all duration-500 pointer-events-auto">
                             <span id="main-category"
-                                class="text-platinum-accent uppercase tracking-[0.2em] text-sm font-bold mb-2 block">Category</span>
+                                class="text-earth-brass uppercase tracking-[0.2em] text-sm font-bold mb-2 block">Category</span>
                             <h2 id="main-title"
                                 class="text-4xl md:text-6xl font-display font-bold text-white mb-4 leading-tight">
                                 Product Name</h2>
@@ -368,11 +421,11 @@
                             <div class="flex items-center gap-4">
                                 <span id="main-price" class="text-2xl font-bold text-white mr-2">$0.00</span>
                                 <button onclick="addToCartCurrent()"
-                                    class="px-6 py-3 bg-white text-steel-900 font-bold rounded-full hover:bg-platinum-accent hover:text-white transition-all shadow-lg flex items-center gap-2">
+                                    class="px-6 py-3 bg-earth-brass text-white font-bold rounded-full hover:bg-white hover:text-earth-charcoal transition-all shadow-lg flex items-center gap-2">
                                     <i class="fa-solid fa-cart-plus"></i> <span id="btn-text">Add to Cart</span>
                                 </button>
                                 <a href="#checkout"
-                                    class="px-6 py-3 bg-transparent border border-white text-white font-bold rounded-full hover:bg-white hover:text-steel-900 transition-all">
+                                    class="px-6 py-3 bg-transparent border border-white text-white font-bold rounded-full hover:bg-white hover:text-earth-charcoal transition-all">
                                     Buy Now
                                 </a>
                             </div>
@@ -383,8 +436,8 @@
                 <div class="lg:col-span-4 h-full flex flex-col gap-4 overflow-hidden">
 
                     <div class="flex justify-between items-center px-1">
-                        <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Next Up</span>
-                        <div class="h-[1px] bg-gray-300 flex-1 ml-4"></div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-earth-walnut">Next Up</span>
+                        <div class="h-[1px] bg-earth-taupe/30 flex-1 ml-4"></div>
                     </div>
 
                     <div class="flex lg:flex-col gap-4 overflow-x-auto lg:overflow-y-auto pb-4 lg:pb-0 h-full no-scrollbar"
@@ -402,35 +455,35 @@
         const products = [
             {
                 id: 1,
-                title: "ITRIK Series X",
+                title: "Nomad Watch",
                 price: "$299.00",
-                category: "Smart Tech",
-                desc: "The future of wrist-worn technology. Features a sapphire crystal display.",
-                image: "/images/pan.jpeg"
+                category: "Accessories",
+                desc: "Minimalist analog styling with smart connectivity. Leather strap in walnut finish.",
+                image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=1000&auto=format&fit=crop"
             },
             {
                 id: 2,
-                title: "Studio Audio",
+                title: "Brass Headphones",
                 price: "$450.00",
-                category: "High Fidelity",
-                desc: "Active noise cancellation meets studio-grade drivers for immersive listening.",
-                image: "/images/pan2.jpeg"
+                category: "Audio",
+                desc: "Acoustic precision encased in brushed antique brass and memory foam.",
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000&auto=format&fit=crop"
             },
             {
                 id: 3,
-                title: "Polaroid Lens",
+                title: "Analog Cam",
                 price: "$129.00",
                 category: "Photography",
-                desc: "Capture the moment with vintage charm. Instant developing film camera.",
-                image: "/images/pan3.jpeg"
+                desc: "Capture the raw essence of life with our reimagined point-and-shoot film camera.",
+                image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=1000&auto=format&fit=crop"
             },
             {
                 id: 4,
-                title: "LUMIX G",
+                title: "Ceramic Lens",
                 price: "$899.00",
-                category: "Cinematic",
-                desc: "Professional grade mirrorless camera. 4K 60fps video and stunning color.",
-                image: "/images/pan4.jpeg"
+                category: "Professional",
+                desc: "Professional glass housed in a durable, heat-resistant ceramic body.",
+                image: "https://images.unsplash.com/photo-1616423664042-835213642731?q=80&w=1000&auto=format&fit=crop"
             }
         ];
 
@@ -456,16 +509,16 @@
         function renderList() {
             productList.innerHTML = products.map((p, index) => `
                 <div onclick="changeProduct(${index})" 
-                     class="cursor-pointer group relative flex-shrink-0 w-[280px] lg:w-full h-[180px] rounded-2xl overflow-hidden border-2 transition-all duration-300 ${index === activeIndex ? 'border-platinum-accent ring-2 ring-platinum-accent/30 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}">
+                     class="cursor-pointer group relative flex-shrink-0 w-[280px] lg:w-full h-[180px] rounded-2xl overflow-hidden border-2 transition-all duration-300 ${index === activeIndex ? 'border-earth-brass ring-2 ring-earth-brass/30 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}">
                     
-                    <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 sepia-[20%]">
                     
-                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors p-4 flex flex-col justify-end">
+                    <div class="absolute inset-0 bg-[#171614]/40 group-hover:bg-[#171614]/20 transition-colors p-4 flex flex-col justify-end">
                         <h4 class="text-white font-bold">${p.title}</h4>
                         <span class="text-xs text-gray-300">${p.price}</span>
                     </div>
 
-                    ${index === activeIndex ? '<div class="absolute top-3 right-3 w-2 h-2 rounded-full bg-platinum-accent shadow-[0_0_10px_#38BDF8]"></div>' : ''}
+                    ${index === activeIndex ? '<div class="absolute top-3 right-3 w-2 h-2 rounded-full bg-earth-brass shadow-[0_0_10px_#AA9371]"></div>' : ''}
                 </div>
             `).join('');
         }
@@ -483,7 +536,7 @@
                     renderList(); // Re-render to update active border
 
                     // Animate In
-                    gsap.to(mainImage, { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" });
+                    gsap.to(mainImage, { scale: 1, opacity: 0.9, duration: 0.8, ease: "power2.out" });
                     gsap.to(mainContent, { opacity: 1, y: 0, duration: 0.4 });
                 }
             });
@@ -535,9 +588,13 @@
         function addToCartCurrent() {
             btnText.innerText = "Added!";
             const countEl = document.getElementById('cart-count');
+            const mobileCountEl = document.getElementById('mobile-cart-count');
+
             if (countEl) {
                 let count = parseInt(countEl.innerText) || 0;
-                countEl.innerText = count + 1;
+                let newCount = count + 1;
+                countEl.innerText = newCount;
+                if (mobileCountEl) mobileCountEl.innerText = newCount;
             }
             setTimeout(() => { btnText.innerText = "Add to Cart"; }, 1500);
         }
@@ -545,132 +602,128 @@
         initSlider();
     </script>
 
-    <!-- use & care section -->
-    <section id="use-care" class="py-24 bg-white">
+    <section id="use-care" class="py-24 bg-earth-base">
         <div class="container mx-auto px-6 flex flex-col md:flex-row gap-16 items-center">
             <div class="w-full md:w-1/2" data-aos="zoom-in">
 
-                <img src="https://images.unsplash.com/photo-1581093458791-9f3022543615?auto=format&fit=crop&w=2000&q=80"
-                    class="rounded-[2rem] shadow-xl w-full h-[400px] object-cover hoverable">
+                <img src="https://images.unsplash.com/photo-1617191519105-d07b98b29c67?q=80&w=2000&auto=format&fit=crop"
+                    class="rounded-[2rem] shadow-xl w-full h-[400px] object-cover hoverable grayscale-[30%]">
             </div>
             <div class="w-full md:w-1/2" data-aos="fade-left">
-                <h2 class="text-4xl font-display font-bold text-steel-900 mb-6">Use & Care</h2>
-                <p class="text-steel-500 mb-8 leading-relaxed">Detailed care guides included with every purchase.</p>
+                <h2 class="text-4xl font-display font-bold text-earth-charcoal mb-6">Use & Care</h2>
+                <p class="text-earth-walnut mb-8 leading-relaxed">Longevity is key. Detailed care guides for brass and
+                    leather included with every purchase.</p>
                 <ul class="space-y-4">
                     <li
-                        class="flex items-center gap-4 p-4 bg-steel-50 rounded-xl hover:bg-steel-100 transition-colors hoverable">
-                        <i class="fa-solid fa-droplet text-platinum-accent"></i><span
-                            class="font-medium text-steel-700">Keep dry and clean.</span>
+                        class="flex items-center gap-4 p-4 bg-[#D6CDC5] rounded-xl hover:bg-[#C9BEB4] transition-colors hoverable">
+                        <i class="fa-solid fa-droplet text-earth-brass"></i><span
+                            class="font-medium text-earth-charcoal">Keep dry and polish occasionally.</span>
                     </li>
                     <li
-                        class="flex items-center gap-4 p-4 bg-steel-50 rounded-xl hover:bg-steel-100 transition-colors hoverable">
-                        <i class="fa-solid fa-temperature-full text-platinum-accent"></i><span
-                            class="font-medium text-steel-700">Store at room temp.</span>
+                        class="flex items-center gap-4 p-4 bg-[#D6CDC5] rounded-xl hover:bg-[#C9BEB4] transition-colors hoverable">
+                        <i class="fa-solid fa-temperature-full text-earth-brass"></i><span
+                            class="font-medium text-earth-charcoal">Store in a cool, dry place.</span>
                     </li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- contact section -->
-    <section id="contact" class="py-24 bg-steel-50" data-aos="fade-up">
+    <section id="contact" class="py-24 bg-[#E8E2DD]" data-aos="fade-up">
         <div class="container mx-auto px-6 text-center max-w-2xl">
-            <h2 class="text-4xl font-display font-bold text-steel-900 mb-6">Contact Us</h2>
+            <h2 class="text-4xl font-display font-bold text-earth-charcoal mb-6">Contact Atelier</h2>
             <form class="space-y-4">
                 <input type="text" placeholder="Name"
-                    class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-platinum-accent outline-none hoverable">
+                    class="w-full p-4 rounded-xl border-none shadow-sm bg-white focus:ring-2 focus:ring-earth-brass outline-none hoverable placeholder-earth-taupe text-earth-charcoal">
                 <input type="email" placeholder="Email"
-                    class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-platinum-accent outline-none hoverable">
+                    class="w-full p-4 rounded-xl border-none shadow-sm bg-white focus:ring-2 focus:ring-earth-brass outline-none hoverable placeholder-earth-taupe text-earth-charcoal">
                 <textarea rows="4" placeholder="Message"
-                    class="w-full p-4 rounded-xl border-none shadow-sm focus:ring-2 focus:ring-platinum-accent outline-none hoverable"></textarea>
+                    class="w-full p-4 rounded-xl border-none shadow-sm bg-white focus:ring-2 focus:ring-earth-brass outline-none hoverable placeholder-earth-taupe text-earth-charcoal"></textarea>
                 <button type="button"
-                    class="px-8 py-3 bg-steel-900 text-white font-bold rounded-full hover:bg-platinum-accent transition-colors hoverable">SEND
+                    class="px-8 py-3 bg-earth-charcoal text-white font-bold rounded-full hover:bg-earth-brass transition-colors hoverable">SEND
                     MESSAGE</button>
             </form>
         </div>
     </section>
 
-    <!-- upgrade section  -->
-    <section class="py-32 bg-steel-900 text-white relative overflow-hidden text-center" data-aos="zoom-in">
+    <section class="py-32 bg-earth-charcoal text-white relative overflow-hidden text-center" data-aos="zoom-in">
         <div class="container mx-auto px-6 relative z-10">
-            <h2 class="text-5xl font-display font-bold mb-8">Ready to Upgrade?</h2>
+            <h2 class="text-5xl font-display font-bold mb-8 text-[#E0D9D3]">Elevate Your Everyday.</h2>
             <a href="#products"
-                class="inline-block px-12 py-5 bg-white text-steel-900 font-bold rounded-full hover:scale-110 transition-transform hoverable">SHOP
+                class="inline-block px-12 py-5 bg-earth-brass text-white font-bold rounded-full hover:scale-110 transition-transform hoverable shadow-glow">SHOP
                 NOW</a>
         </div>
     </section>
 
-    <!-- footer section -->
-    <footer class="bg-steel-950 text-steel-400 py-16 border-t border-steel-900">
+    <footer class="bg-[#171614] text-earth-taupe py-16 border-t border-[#2a2824]">
         <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
             <div class="space-y-4">
                 <a href="#" onclick="window.scrollTo(0,0); return false;"
-                    class="text-3xl font-display font-bold text-white hover:text-platinum-accent transition-colors flex items-center gap-2 hoverable">
+                    class="text-3xl font-display font-bold text-white hover:text-earth-brass transition-colors flex items-center gap-2 hoverable">
                     <i class="fa-solid fa-layer-group"></i> ITRIK
                 </a>
-                <p class="text-sm leading-relaxed opacity-80">Engineered for perfection. We provide the highest quality
-                    digital and physical assets for professionals.</p>
+                <p class="text-sm leading-relaxed opacity-80 text-[#918574]">Designed in Bhopal. Engineered for the
+                    world. We provide organic luxury for the modern creator.</p>
                 <div class="flex gap-4 pt-2">
                     <a href="#"
-                        class="w-8 h-8 rounded-full bg-steel-800 flex items-center justify-center hover:bg-platinum-accent hover:text-steel-900 transition-colors hoverable"><i
+                        class="w-8 h-8 rounded-full bg-[#2a2824] flex items-center justify-center hover:bg-earth-brass hover:text-white transition-colors hoverable"><i
                             class="fa-brands fa-instagram"></i></a>
                     <a href="#"
-                        class="w-8 h-8 rounded-full bg-steel-800 flex items-center justify-center hover:bg-platinum-accent hover:text-steel-900 transition-colors hoverable"><i
+                        class="w-8 h-8 rounded-full bg-[#2a2824] flex items-center justify-center hover:bg-earth-brass hover:text-white transition-colors hoverable"><i
                             class="fa-brands fa-twitter"></i></a>
                     <a href="#"
-                        class="w-8 h-8 rounded-full bg-steel-800 flex items-center justify-center hover:bg-platinum-accent hover:text-steel-900 transition-colors hoverable"><i
+                        class="w-8 h-8 rounded-full bg-[#2a2824] flex items-center justify-center hover:bg-earth-brass hover:text-white transition-colors hoverable"><i
                             class="fa-brands fa-linkedin-in"></i></a>
                 </div>
             </div>
             <div>
                 <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Navigation</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#home" class="hover:text-platinum-accent transition-colors hoverable">Home</a></li>
-                    <li><a href="#about" class="hover:text-platinum-accent transition-colors hoverable">About Us</a>
+                    <li><a href="#home" class="hover:text-earth-brass transition-colors hoverable">Home</a></li>
+                    <li><a href="#about" class="hover:text-earth-brass transition-colors hoverable">About Us</a>
                     </li>
-                    <li><a href="#products"
-                            class="hover:text-platinum-accent transition-colors hoverable">Marketplace</a></li>
-                    <li><a href="#use-care" class="hover:text-platinum-accent transition-colors hoverable">Use &
+                    <li><a href="#products" class="hover:text-earth-brass transition-colors hoverable">Collection</a>
+                    </li>
+                    <li><a href="#use-care" class="hover:text-earth-brass transition-colors hoverable">Use &
                             Care</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Support</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#contact" class="hover:text-platinum-accent transition-colors hoverable">Contact
+                    <li><a href="#contact" class="hover:text-earth-brass transition-colors hoverable">Contact
                             Support</a></li>
-                    <li><a href="#" class="hover:text-platinum-accent transition-colors hoverable">FAQ</a></li>
-                    <li><a href="#" class="hover:text-platinum-accent transition-colors hoverable">Shipping &
+                    <li><a href="#" class="hover:text-earth-brass transition-colors hoverable">FAQ</a></li>
+                    <li><a href="#" class="hover:text-earth-brass transition-colors hoverable">Shipping &
                             Returns</a></li>
-                    <li><a href="#" class="hover:text-platinum-accent transition-colors hoverable">Privacy Policy</a>
+                    <li><a href="#" class="hover:text-earth-brass transition-colors hoverable">Privacy Policy</a>
                     </li>
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Get in Touch</h4>
+                <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Atelier</h4>
                 <ul class="space-y-4 text-sm">
                     <li class="flex items-start gap-3">
-                        <i class="fa-solid fa-location-dot mt-1 text-platinum-accent"></i>
-                        <span>123 Innovation Blvd,<br>Design District, NY 10012</span>
+                        <i class="fa-solid fa-location-dot mt-1 text-earth-brass"></i>
+                        <span>Kamla Nagar,<br>Bhopal, MP 462003</span>
                     </li>
                     <li class="flex items-center gap-3">
-                        <i class="fa-solid fa-phone text-platinum-accent"></i>
-                        <span>+1 (555) 987-6543</span>
+                        <i class="fa-solid fa-phone text-earth-brass"></i>
+                        <span>+91 987 654 3210</span>
                     </li>
                     <li class="flex items-center gap-3">
-                        <i class="fa-solid fa-envelope text-platinum-accent"></i>
+                        <i class="fa-solid fa-envelope text-earth-brass"></i>
                         <span>hello@itrik.com</span>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="container mx-auto px-6 mt-12 pt-8 border-t border-steel-900 text-center text-xs opacity-50">
+        <div class="container mx-auto px-6 mt-12 pt-8 border-t border-[#2a2824] text-center text-xs opacity-50">
             &copy; 2026 ITRIK Industries. All rights reserved.
         </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- custom scripts -->
     <script>
         // Initialize AOS
         AOS.init({ duration: 800, once: true, mirror: false, offset: 120 });
@@ -721,39 +774,24 @@
         cartBtns.forEach(b => b?.addEventListener('click', () => toggleCart(true)));
         closeCart.addEventListener('click', () => toggleCart(false));
 
-        // 4. Add to Cart
-        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                cartCount++;
-                document.getElementById('cart-count').innerText = cartCount;
-                document.getElementById('mobile-cart-count').innerText = cartCount;
-                this.innerHTML = '<i class="fa-solid fa-check"></i>';
-                this.classList.add('bg-platinum-accent', 'text-steel-900');
-                setTimeout(() => {
-                    this.innerHTML = '<i class="fa-solid fa-plus"></i>';
-                    this.classList.remove('bg-platinum-accent', 'text-steel-900');
-                }, 1000);
-            });
-        });
-
-        // 5. Custom Cursor
+        // 4. Custom Cursor
         const cursorDot = document.getElementById('cursor-dot');
         const cursorOutline = document.getElementById('cursor-outline');
         window.addEventListener('mousemove', (e) => {
             const posX = e.clientX; const posY = e.clientY;
             cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
             cursorOutline.style.left = `${posX}px`; cursorOutline.style.top = `${posY}px`;
-            if (e.target.closest('.hoverable, a, button, input')) { document.body.classList.add('hovering'); }
+            if (e.target.closest('.hoverable, a, button, input, textarea')) { document.body.classList.add('hovering'); }
             else { document.body.classList.remove('hovering'); }
         });
 
         // ----------------------------------------------------
-        // 6. THREE.JS EXPLOSION ANIMATION (Integrated for Pan)
+        // 5. THREE.JS EXPLOSION ANIMATION
         // ----------------------------------------------------
 
         // Settings
-        const IMAGE_URL = '../images/pan.jpeg'; // YOUR LOCAL IMAGE
-        const FALLBACK_URL = 'https://images.unsplash.com/photo-1585514697208-86d34b413247?q=80&w=800&auto=format&fit=crop'; // Just in case local fails
+        // Using a brass/gold texture fallback to match the theme
+        const IMAGE_URL = 'images/pan.jpeg';
 
         const GRID_SIZE = 14;
         const EXPLODE_DIST = 400;
@@ -767,7 +805,7 @@
             const scene = new THREE.Scene();
             // IMPORTANT: Camera aspect ratio based on CONTAINER, not Window
             const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 2000);
-            camera.position.z = 120; // Adjust zoom to fit the pan
+            camera.position.z = 120; // Adjust zoom
 
             const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             renderer.setSize(container.clientWidth, container.clientHeight);
@@ -783,19 +821,15 @@
             // Texture
             const textureLoader = new THREE.TextureLoader();
 
-            // Try loading local image, fallback to online if it fails
             textureLoader.load(
                 IMAGE_URL,
                 (texture) => { initShards(texture); },
                 undefined,
-                () => {
-                    console.log("Local image not found, using fallback.");
-                    textureLoader.load(FALLBACK_URL, (texture) => initShards(texture));
-                }
+                (err) => { console.log("Texture error"); }
             );
 
             function initShards(texture) {
-                texture.center.set(0.5, 0.5); // Center texture
+                texture.center.set(0.5, 0.5);
                 const group = new THREE.Group();
 
                 // Scale grid to fit container view
@@ -813,7 +847,7 @@
                             uvs[k] = (i + uvs[k]) / GRID_SIZE;
                             uvs[k + 1] = (j + uvs[k + 1]) / GRID_SIZE;
                         }
-                        const material = new THREE.MeshStandardMaterial({ map: texture });
+                        const material = new THREE.MeshStandardMaterial({ map: texture, color: 0xE0D9D3 }); // Tinted with bone color
                         const mesh = new THREE.Mesh(geometry, material);
 
                         // Position Logic
