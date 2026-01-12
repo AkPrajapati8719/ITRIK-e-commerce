@@ -7,23 +7,25 @@
     <title>ITRIK | Earthy Elegance</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- custom js for animations and interactions colors -->
+    <!-- Tailwind Configuration with Custom Colors -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         earth: {
-                            base: '#E0D9D3',      // Bone / Light Greige (Main BG)
-                            taupe: '#918574',     // Warm Grey (Borders/Secondary)
-                            brass: '#AA9371',     // Antique Brass (Primary Accent/Action)
-                            walnut: '#524639',    // Dark Walnut (Secondary Text)
-                            charcoal: '#171614',  // Soft Black (Primary Text/Footer)
+                            base: '#E0D9D3',      // Bone / Light Greige
+                            taupe: '#918574',     // Warm Grey
+                            brass: '#AA9371',     // Antique Brass
+                            walnut: '#524639',    // Dark Walnut
+                            charcoal: '#171614',  // Soft Black
                         }
                     },
                     fontFamily: {
@@ -40,7 +42,6 @@
     </script>
 
     <!-- Custom CSS -->
-    <!-- ======================== -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;700&display=swap');
 
@@ -51,6 +52,8 @@
             font-family: 'Inter', sans-serif;
             background-color: #E0D9D3;
             color: #171614;
+            -webkit-font-smoothing: antialiased;
+            /* Premium font rendering */
         }
 
         /* Custom Scrollbar */
@@ -71,9 +74,9 @@
             background: #524639;
         }
 
-        /* Glass Nav */
+        /* Glassmorphism */
         .glass-nav {
-            background: rgba(224, 217, 211, 0.90);
+            background: rgba(224, 217, 211, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
@@ -85,9 +88,21 @@
             border: 1px solid rgba(145, 133, 116, 0.2);
         }
 
-        /* Animation Utilities */
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background-color: #E0D9D3;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease-out, visibility 0.6s;
+        }
+
+        /* Animations */
         .animate-blob {
-            animation: blob 7s infinite;
+            animation: blob 10s infinite alternate;
         }
 
         .animation-delay-2000 {
@@ -112,24 +127,33 @@
             }
         }
 
-        /* Hide Scrollbar Utility (Consolidated) */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
 
         .no-scrollbar {
             -ms-overflow-style: none;
-            /* IE and Edge */
             scrollbar-width: none;
-            /* Firefox */
+        }
+
+        /* Scroll Lock Class */
+        body.overflow-hidden {
+            overflow: hidden !important;
         }
     </style>
-
 </head>
 
 <body class="text-earth-charcoal selection:bg-earth-brass selection:text-white">
 
-    <!-- Auth Modal -->
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="text-center">
+            <i class="fa-solid fa-layer-group text-6xl text-earth-brass mb-4 animate-bounce"></i>
+            <h2 class="text-2xl font-display font-bold tracking-widest text-earth-charcoal">ITRIK</h2>
+        </div>
+    </div>
+
+    <!-- Modals and Drawers -->
     <div id="auth-modal"
         class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="absolute inset-0 bg-earth-charcoal/80 backdrop-blur-sm" id="modal-backdrop"></div>
@@ -170,12 +194,11 @@
             class="w-full py-4 bg-earth-charcoal text-white font-bold rounded-xl hover:bg-earth-brass hover:shadow-glow transition-all">CHECKOUT</button>
     </div>
 
-    <!-- Navigation bar -->
+    <!-- Navigation -->
     <nav
         class="fixed top-5 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 rounded-full glass-nav transition-all duration-300 py-3 px-6">
         <div class="flex justify-between items-center">
-
-            <a href="#" onclick="handleLogoClick(); return false;"
+            <a href="#" onclick="window.scrollTo(0,0); return false;"
                 class="text-2xl font-bold font-display tracking-widest text-earth-charcoal flex items-center gap-2 cursor-pointer">
                 <i class="fa-solid fa-layer-group text-earth-brass"></i> ITRIK
             </a>
@@ -183,10 +206,8 @@
             <ul class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-earth-walnut">
                 <li><a href="#home" class="hover:text-earth-brass transition-colors">Home</a></li>
                 <li><a href="#about" class="hover:text-earth-brass transition-colors">About</a></li>
-                <li><a href="#products" class="hover:text-earth-brass transition-colors">Collection</a>
-                </li>
-                <li><a href="#use-care" class="hover:text-earth-brass transition-colors">Care</a>
-                </li>
+                <li><a href="#products" class="hover:text-earth-brass transition-colors">Collection</a></li>
+                <li><a href="#use-care" class="hover:text-earth-brass transition-colors">Care</a></li>
                 <li><a href="#contact" class="hover:text-earth-brass transition-colors">Contact</a></li>
             </ul>
 
@@ -204,7 +225,8 @@
                     Now</a>
             </div>
 
-            <button id="mobile-toggle" class="md:hidden text-2xl text-earth-charcoal cursor-pointer">
+            <button id="mobile-toggle"
+                class="md:hidden text-2xl text-earth-charcoal cursor-pointer transition-transform duration-300">
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
         </div>
@@ -230,7 +252,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section home// -->
+    <!-- Main Content home -->
     <section id="home"
         class="relative min-h-screen flex items-center justify-center overflow-hidden bg-earth-base pt-32 pb-10 md:pt-20 md:pb-0">
         <div class="absolute inset-0 opacity-20 pointer-events-none">
@@ -241,6 +263,7 @@
                 class="absolute bottom-0 left-0 w-96 h-96 bg-earth-brass rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000">
             </div>
         </div>
+
         <div class="container mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 items-center gap-12">
             <div data-aos="fade-up" data-aos-duration="800">
                 <span class="text-earth-brass font-bold tracking-[0.3em] uppercase text-sm mb-4 block">Earthy &
@@ -251,22 +274,34 @@
                 </h1>
                 <p class="text-earth-walnut text-lg mb-8 max-w-md">Curated aesthetics for the modern professional.
                     Merging organic textures with digital precision.</p>
-                <div class="flex gap-4">
-                    <a href="#products"
-                        class="px-8 py-4 bg-earth-charcoal text-white rounded-full font-bold shadow-lg hover:shadow-premium hover:bg-earth-brass hover:-translate-y-1 transition-all cursor-pointer">EXPLORE
-                        COLLECTION</a>
+                <a href="#products"
+                    class="px-8 py-4 bg-earth-charcoal text-white rounded-full font-bold shadow-lg hover:shadow-premium hover:bg-earth-brass hover:-translate-y-1 transition-all cursor-pointer inline-block">EXPLORE
+                    COLLECTION</a>
+            </div>
+            <!-- Product Video -->
+            <div class="relative group cursor-pointer rounded-[3rem] overflow-hidden bg-[#171614] aspect-video max-w-full
+            shadow-2xl transition-all duration-700 ease-out hover:shadow-glow" data-aos="zoom-in"
+                data-aos-duration="400">
+
+                <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-90
+               group-hover:scale-105
+               transition-transform duration-700 ease-out">
+                    <source src="/images/panVIdeo - Trim.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <!-- Cinematic overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t
+                    from-[#171614]/40 to-transparent
+                    pointer-events-none">
                 </div>
+
             </div>
 
-            <!-- Hero Image -->
-            <div class="relative group cursor-pointer" data-aos="zoom-in" data-aos-duration="400">
-                <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=2000&auto=format&fit=crop"
-                    alt="ITRIK Hero"
-                    class="rounded-[3rem] shadow-premium object-cover h-[400px] md:h-[500px] w-full rotate-2 hover:rotate-0 hover:scale-105 transition-transform duration-700 ease-in-out grayscale-[20%] sepia-[20%]">
-            </div>
         </div>
     </section>
-    <!-- Features Section -->
+
+    <!-- Features -->
     <section class="py-16 bg-[#E8E2DD] border-b border-earth-taupe/20">
         <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="0"><i
@@ -289,40 +324,62 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-32 bg-earth-base overflow-hidden">
+    <section id="about" class="py-24 bg-earth-base overflow-hidden">
         <div class="container mx-auto px-6">
+
+            <!-- 🔥 Section Heading -->
+            <div class="text-center mb-10" data-aos="fade-up">
+                <span class="text-earth-brass font-bold tracking-[0.35em] uppercase text-sm block mb-3">
+                    About Us
+                </span>
+                <h3 class="text-4xl md:text-3xl font-display font-bold text-earth-charcoal">
+                    Crafted with Purpose
+                </h3>
+            </div>
+
             <div class="flex flex-col md:flex-row items-center gap-16">
                 <div class="w-full md:w-1/2 relative" data-aos="fade-right" data-aos-duration="1000">
                     <div class="absolute -top-4 -left-4 w-24 h-24 bg-earth-brass/20 rounded-full blur-xl"></div>
 
-                    <div id="explosion-container"
-                        class="rounded-[2.5rem] shadow-premium relative z-10 w-full h-[500px] bg-[#D6CDC5] overflow-hidden cursor-pointer">
-                    </div>
+                    <!-- Video Card -->
+                    <div class="relative group cursor-pointer rounded-[3rem] overflow-hidden bg-[#171614] aspect-video max-w-full
+                    shadow-2xl transition-all duration-700 ease-out hover:shadow-glow" data-aos="zoom-in"
+                        data-aos-duration="400">
 
-                    <div
-                        class="absolute -bottom-10 -right-5 z-20 bg-[#F5F2EF] p-6 rounded-2xl shadow-premium border border-earth-taupe/20 max-w-xs animate-float">
-                        <div class="flex items-center gap-4">
-                            <div class="bg-earth-charcoal text-white p-3 rounded-full"><i class="fa-solid fa-award"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-earth-charcoal text-lg">Design Excellence</h4>
-                                <p class="text-xs text-earth-walnut">Awarded for Organic Design 2026</p>
-                            </div>
+                        <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-90
+                               group-hover:scale-105
+                               transition-transform duration-700 ease-out">
+                            <source src="/images/product_Video1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+
+                        <!-- Cinematic overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t
+                        from-[#171614]/40 to-transparent
+                        pointer-events-none">
                         </div>
                     </div>
                 </div>
 
+                <!-- Text Content -->
                 <div class="w-full md:w-1/2" data-aos="fade-left" data-aos-duration="1000">
-                    <h4 class="text-earth-brass font-bold tracking-widest uppercase mb-4">The Philosophy</h4>
+                    <h4 class="text-earth-brass font-bold tracking-widest uppercase mb-4">
+                        The Philosophy
+                    </h4>
+
                     <h2 class="text-4xl md:text-5xl font-display font-bold text-earth-charcoal mb-6 leading-tight">
-                        Nature Meets <br> <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-earth-taupe to-earth-charcoal">Innovation.</span>
+                        Nature Meets <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-earth-taupe to-earth-charcoal">
+                            Innovation.
+                        </span>
                     </h2>
+
                     <p class="text-earth-walnut text-lg leading-relaxed mb-8">
-                        At ITRIK, we strip away the unnecessary. Our palette is drawn from the earth—Brass, Walnut, and
-                        Stone—engineered
-                        into tools that feel as good as they look.
+                        At ITRIK, we strip away the unnecessary.
+                        Our palette is drawn from the earth—Brass, Walnut, and Stone—
+                        engineered into tools that feel as good as they look.
                     </p>
+
                     <div class="grid grid-cols-2 gap-6 mb-8">
                         <div class="border-l-4 border-earth-brass pl-4">
                             <span class="block text-3xl font-bold text-earth-charcoal">10k+</span>
@@ -333,8 +390,9 @@
                             <span class="text-sm text-earth-walnut uppercase tracking-wide">Sustainable</span>
                         </div>
                     </div>
-                    <a href="#contact"
-                        class="text-earth-charcoal font-bold border-b-2 border-earth-brass hover:text-earth-brass transition-colors pb-1">
+
+                    <a href="#contact" class="text-earth-charcoal font-bold border-b-2 border-earth-brass
+                           hover:text-earth-brass transition-colors pb-1">
                         Read Our Full Story <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
                 </div>
@@ -343,72 +401,264 @@
     </section>
 
     <!-- Products Section -->
-    <section id="products" class="min-h-screen flex items-center justify-center px-4 py-24 overflow-hidden">
+    <section id="products" class="min-h-screen px-4 py-24 overflow-hidden">
 
-        <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-14 items-center">
+        <!-- 🔥 Section Heading -->
+        <div class="max-w-7xl mx-auto text-center mb-8" data-aos="fade-up">
+            <h2 class="text-earth-brass font-bold tracking-[0.35em] uppercase text-sm text-center mb-3">
+                Trendy Items
+            </h2>
+        </div>
 
-            <!-- MAIN PANEL -->
-            <div class="lg:col-span-7 relative h-[420px] md:h-[520px]
-                rounded-[2.5rem] overflow-hidden bg-[#171614] shadow-2xl">
+        <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-center">
 
-                <img id="mainImage" class="absolute inset-0 w-full h-full object-cover object-center" />
+            <!-- MAIN PRODUCT DISPLAY -->
+            <div class="lg:col-span-7 relative h-[450px] md:h-[550px] rounded-[2.5rem]
+                   overflow-hidden bg-[#171614] shadow-2xl">
+
+                <img id="mainImage" class="absolute inset-0 w-full h-full object-cover object-center
+                       transition-transform duration-700" />
 
                 <div class="absolute inset-0 bg-gradient-to-t
-                  from-[#171614] via-[#171614]/40 to-transparent"></div>
+                        from-[#171614] via-[#171614]/40 to-transparent"></div>
 
                 <div id="mainContent" class="absolute bottom-8 md:bottom-10 left-6 md:left-10 max-w-lg z-10">
 
                     <div id="mainCategory" class="text-[#AA9371] text-xs tracking-[0.35em] font-bold uppercase mb-2">
                     </div>
 
-                    <h2 id="mainTitle" class="text-3xl md:text-5xl font-bold text-white mb-4"></h2>
+                    <h2 id="mainTitle" class="text-3xl md:text-5xl font-bold text-white mb-4 font-display">
+                    </h2>
 
-                    <p id="mainDesc" class="text-gray-300 mb-6 leading-relaxed text-sm md:text-base"></p>
+                    <p id="mainDesc" class="text-gray-300 mb-6 leading-relaxed text-sm md:text-base">
+                    </p>
 
                     <div class="flex flex-wrap gap-4 items-center">
                         <span id="mainPrice" class="text-lg font-bold text-white"></span>
-
                         <button class="px-7 py-3 rounded-full bg-[#AA9371] text-[#171614]
-                         text-xs font-bold uppercase tracking-widest
-                         hover:bg-white transition">
+                               text-xs font-bold uppercase tracking-widest
+                               hover:bg-white transition">
                             Buy Now
-                        </button>
-
-                        <button class="px-7 py-3 rounded-full border border-[#AA9371]
-                         text-[#AA9371] text-xs font-bold uppercase tracking-widest
-                         hover:bg-[#AA9371] hover:text-[#171614] transition">
-                            Add to Cart
                         </button>
                     </div>
                 </div>
 
-                <!-- ARROWS -->
+                <!-- Navigation Buttons -->
                 <div class="absolute bottom-6 right-6 flex gap-3 z-20">
-                    <button id="prevBtn" class="w-11 h-11 rounded-full bg-white/10 border border-white/20
-                 text-white hover:bg-[#AA9371] transition">←</button>
-                    <button id="nextBtn" class="w-11 h-11 rounded-full bg-white/10 border border-white/20
-                 text-white hover:bg-[#AA9371] transition">→</button>
+                    <button id="prevBtn" class="w-12 h-12 rounded-full bg-white/10 border border-white/20
+                           text-white hover:bg-[#AA9371] transition flex items-center justify-center">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button id="nextBtn" class="w-12 h-12 rounded-full bg-white/10 border border-white/20
+                           text-white hover:bg-[#AA9371] transition flex items-center justify-center">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- CARD STRIP -->
+            <!-- PRODUCT CARD STRIP -->
             <div class="lg:col-span-5 overflow-hidden">
-                <div id="cardList" class="flex gap-6"></div>
+                <div id="cardList" class="flex gap-4 overflow-x-auto no-scrollbar pb-4 pl-2"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Luxury Product Carousel -->
+    <section class="relative">
+
+        <!-- 🔁 Luxury Product Carousel -->
+        <div class="relative max-w-7xl mx-auto mt-12 overflow-hidden">
+
+            <div id="product-carousel" class="flex gap-6 items-center will-change-transform">
+
+                <!-- PRODUCT CARD (repeat as needed) -->
+                <div class="carousel-item relative group
+        w-[260px] h-[360px] md:w-[280px] md:h-[380px]
+        flex-shrink-0 rounded-[2rem] overflow-hidden
+        bg-earth-charcoal shadow-2xl">
+
+                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
+             transition-transform duration-700 group-hover:scale-110"
+                        src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop"
+                        alt="Nomad Watch">
+
+                    <div class="absolute inset-0 bg-black/35"></div>
+
+                    <div class="absolute bottom-5 left-5 right-5 z-10">
+                        <h4 class="text-white font-bold text-lg mb-2 font-display">
+                            Nomad Watch
+                        </h4>
+
+                        <button class="buy-btn w-full py-3 rounded-full
+            bg-earth-brass text-earth-charcoal
+            text-xs font-bold uppercase tracking-widest
+            hover:bg-white transition">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- COPY ABOVE CARD FOR OTHER PRODUCTS (YOUR IMAGES ARE FINE) -->
+                <div class="carousel-item relative group
+                w-[260px] h-[360px] md:w-[280px] md:h-[380px]
+                flex-shrink-0 rounded-[2rem] overflow-hidden
+                bg-earth-charcoal shadow-2xl">
+
+                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
+                  transition-transform duration-700 group-hover:scale-110" src="images/pan5.png" alt="Product 1">
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-black/35"></div>
+
+                    <!-- Content -->
+                    <div class="absolute bottom-5 left-5 right-5 z-10">
+                        <h4 class="text-white font-bold text-lg mb-2 font-display">
+                            Nomad Watch
+                        </h4>
+
+                        <button class="buy-btn w-full py-3 rounded-full
+                 bg-earth-brass text-earth-charcoal
+                 text-xs font-bold uppercase tracking-widest
+                 hover:bg-white transition">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+                <div class="carousel-item relative group
+                w-[260px] h-[360px] md:w-[280px] md:h-[380px]
+                flex-shrink-0 rounded-[2rem] overflow-hidden
+                bg-earth-charcoal shadow-2xl">
+
+                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
+                  transition-transform duration-700 group-hover:scale-110" src="images/pan.jpeg" alt="Product 1">
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-black/35"></div>
+
+                    <!-- Content -->
+                    <div class="absolute bottom-5 left-5 right-5 z-10">
+                        <h4 class="text-white font-bold text-lg mb-2 font-display">
+                            Nomad Watch
+                        </h4>
+
+                        <button class="buy-btn w-full py-3 rounded-full
+                 bg-earth-brass text-earth-charcoal
+                 text-xs font-bold uppercase tracking-widest
+                 hover:bg-white transition">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+                <div class="carousel-item relative group
+                w-[260px] h-[360px] md:w-[280px] md:h-[380px]
+                flex-shrink-0 rounded-[2rem] overflow-hidden
+                bg-earth-charcoal shadow-2xl">
+
+                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
+                  transition-transform duration-700 group-hover:scale-110" src="images/pan4.jpeg" alt="Product 1">
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-black/35"></div>
+
+                    <!-- Content -->
+                    <div class="absolute bottom-5 left-5 right-5 z-10">
+                        <h4 class="text-white font-bold text-lg mb-2 font-display">
+                            Nomad Watch
+                        </h4>
+
+                        <button class="buy-btn w-full py-3 rounded-full
+                 bg-earth-brass text-earth-charcoal
+                 text-xs font-bold uppercase tracking-widest
+                 hover:bg-white transition">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+                <div class="carousel-item relative group
+                w-[260px] h-[360px] md:w-[280px] md:h-[380px]
+                flex-shrink-0 rounded-[2rem] overflow-hidden
+                bg-earth-charcoal shadow-2xl">
+
+                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
+                  transition-transform duration-700 group-hover:scale-110" src="images/pan2.jpeg" alt="Product 1">
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-black/35"></div>
+
+                    <!-- Content -->
+                    <div class="absolute bottom-5 left-5 right-5 z-10">
+                        <h4 class="text-white font-bold text-lg mb-2 font-display">
+                            Nomad Watch
+                        </h4>
+
+                        <button class="buy-btn w-full py-3 rounded-full
+                 bg-earth-brass text-earth-charcoal
+                 text-xs font-bold uppercase tracking-widest
+                 hover:bg-white transition">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+                <div class="carousel-item relative group
+                w-[260px] h-[360px] md:w-[280px] md:h-[380px]
+                flex-shrink-0 rounded-[2rem] overflow-hidden
+                bg-earth-charcoal shadow-2xl">
+
+                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
+                  transition-transform duration-700 group-hover:scale-110" src="images/pan3.jpeg" alt="Product 1">
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-black/35"></div>
+
+                    <!-- Content -->
+                    <div class="absolute bottom-5 left-5 right-5 z-10">
+                        <h4 class="text-white font-bold text-lg mb-2 font-display">
+                            Nomad Watch
+                        </h4>
+
+                        <button class="buy-btn w-full py-3 rounded-full
+                 bg-earth-brass text-earth-charcoal
+                 text-xs font-bold uppercase tracking-widest
+                 hover:bg-white transition">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ⬅️➡️ Carousel Controls (INSIDE RELATIVE WRAPPER) -->
+            <div class="absolute inset-y-0 left-0 right-0
+                flex items-center justify-between
+                px-4 pointer-events-none z-20">
+
+                <button id="carousel-prev" class="pointer-events-auto w-12 h-12 rounded-full
+        bg-earth-charcoal/80 text-white
+        flex items-center justify-center
+        hover:bg-earth-brass transition">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+
+                <button id="carousel-next" class="pointer-events-auto w-12 h-12 rounded-full
+        bg-earth-charcoal/80 text-white
+        flex items-center justify-center
+        hover:bg-earth-brass transition">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
             </div>
 
         </div>
     </section>
 
     <!-- Use & Care Section -->
-    <section id="use-care" class="py-24 bg-earth-base">
+    <section id="use-care" class="py-24 bg-earth-base relative">
         <div class="container mx-auto px-6 flex flex-col md:flex-row gap-16 items-center">
-
             <div class="w-full md:w-1/2" data-aos="zoom-in">
                 <div id="care-3d-container"
                     class="rounded-[2rem] shadow-xl w-full h-[400px] bg-[#D6CDC5] overflow-hidden relative cursor-pointer border border-earth-taupe/20">
                 </div>
             </div>
-
             <div class="w-full md:w-1/2" data-aos="fade-left">
                 <h2 class="text-4xl font-display font-bold text-earth-charcoal mb-6">Use & Care</h2>
                 <p class="text-earth-walnut mb-8 leading-relaxed">Longevity is key. Detailed care guides for brass and
@@ -466,16 +716,16 @@
                     <i class="fa-solid fa-layer-group"></i> ITRIK
                 </a>
                 <p class="text-sm leading-relaxed opacity-80 text-[#918574]">Designed in Bhopal. Engineered for the
-                    world. We provide organic luxury for the modern creator.</p>
+                    world. Organic luxury for the modern creator.</p>
                 <div class="flex gap-4 pt-2">
                     <a href="#"
-                        class="w-8 h-8 rounded-full bg-[#2a2824] flex items-center justify-center hover:bg-earth-brass hover:text-white transition-colors cursor-pointer"><i
+                        class="w-8 h-8 rounded-full bg-[#2a2824] flex items-center justify-center hover:bg-earth-brass hover:text-white transition-colors"><i
                             class="fa-brands fa-instagram"></i></a>
                     <a href="#"
-                        class="w-8 h-8 rounded-full bg-[#2a2824] flex items-center justify-center hover:bg-earth-brass hover:text-white transition-colors cursor-pointer"><i
+                        class="w-8 h-8 rounded-full bg-[#2a2824] flex items-center justify-center hover:bg-earth-brass hover:text-white transition-colors"><i
                             class="fa-brands fa-twitter"></i></a>
                     <a href="#"
-                        class="w-8 h-8 rounded-full bg-[#2a2824] flex items-center justify-center hover:bg-earth-brass hover:text-white transition-colors cursor-pointer"><i
+                        class="w-8 h-8 rounded-full bg-[#2a2824] flex items-center justify-center hover:bg-earth-brass hover:text-white transition-colors"><i
                             class="fa-brands fa-linkedin-in"></i></a>
                 </div>
             </div>
@@ -483,58 +733,47 @@
                 <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Navigation</h4>
                 <ul class="space-y-2 text-sm">
                     <li><a href="#home" class="hover:text-earth-brass transition-colors">Home</a></li>
-                    <li><a href="#about" class="hover:text-earth-brass transition-colors">About Us</a>
-                    </li>
+                    <li><a href="#about" class="hover:text-earth-brass transition-colors">About Us</a></li>
                     <li><a href="#products" class="hover:text-earth-brass transition-colors">Collection</a></li>
-                    <li><a href="#use-care" class="hover:text-earth-brass transition-colors">Use &
-                            Care</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Support</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#contact" class="hover:text-earth-brass transition-colors">Contact
-                            Support</a></li>
-                    <li><a href="#" class="hover:text-earth-brass transition-colors">FAQ</a></li>
-                    <li><a href="#" class="hover:text-earth-brass transition-colors">Shipping &
-                            Returns</a></li>
-                    <li><a href="#" class="hover:text-earth-brass transition-colors">Privacy Policy</a>
-                    </li>
+                    <li><a href="#contact" class="hover:text-earth-brass transition-colors">Contact Support</a></li>
+                    <li><a href="#" class="hover:text-earth-brass transition-colors">Shipping</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Atelier</h4>
                 <ul class="space-y-4 text-sm">
-                    <li class="flex items-start gap-3">
-                        <i class="fa-solid fa-location-dot mt-1 text-earth-brass"></i>
-                        <span>Kamla Nagar,<br>Bhopal, MP 462003</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <i class="fa-solid fa-phone text-earth-brass"></i>
-                        <span>+91 987 654 3210</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <i class="fa-solid fa-envelope text-earth-brass"></i>
-                        <span>hello@itrik.com</span>
-                    </li>
+                    <li class="flex items-start gap-3"><i
+                            class="fa-solid fa-location-dot mt-1 text-earth-brass"></i><span>Kamla Nagar,<br>Bhopal, MP
+                            462003</span></li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-phone text-earth-brass"></i><span>+91 987
+                            654 3210</span></li>
                 </ul>
             </div>
         </div>
-        <div class="container mx-auto px-6 mt-12 pt-8 border-t border-[#2a2824] text-center text-xs opacity-50">
-            &copy; 2026 ITRIK Industries. All rights reserved.
-        </div>
+        <div class="container mx-auto px-6 mt-12 pt-8 border-t border-[#2a2824] text-center text-xs opacity-50">&copy;
+            2026 ITRIK Industries. All rights reserved.</div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <!-- custom js mobile-nav , animations-->
+    <!-- Custom JavaScript animations -->
     <script>
-        // Initialize AOS
-        AOS.init({ duration: 800, once: true, mirror: false, offset: 120 });
-        window.addEventListener('load', AOS.refresh);
+        // --- 1. PRELOADER ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            preloader.style.visibility = 'hidden';
+            AOS.init({ duration: 800, once: true, offset: 100 });
+        });
 
-        // --- INTERACTION LOGIC ---
-        // 1. Mobile Menu
+        // --- 2. INTERACTION LOGIC ---
+
+        // Mobile Menu
         const mobileToggle = document.getElementById('mobile-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -542,45 +781,46 @@
         function toggleMobileMenu() {
             mobileMenu.classList.toggle('hidden');
             mobileMenu.classList.toggle('flex');
-            const icon = mobileToggle.querySelector('i');
-            icon.classList.toggle('fa-bars-staggered');
-            icon.classList.toggle('fa-xmark');
-        }
 
-        // New function to handle logo click
-        function handleLogoClick() {
-            window.scrollTo(0, 0);
-            if (!mobileMenu.classList.contains('hidden')) {
-                toggleMobileMenu();
+            // Icon Switch
+            const icon = mobileToggle.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars-staggered');
+                document.body.classList.remove('overflow-hidden'); // Restore scroll
+            } else {
+                icon.classList.remove('fa-bars-staggered');
+                icon.classList.add('fa-xmark');
+                document.body.classList.add('overflow-hidden'); // Lock scroll
             }
         }
-
         mobileToggle.addEventListener('click', toggleMobileMenu);
         mobileLinks.forEach(link => link.addEventListener('click', toggleMobileMenu));
 
-        // 2. Login Modal
+        // Login Modal
         const modal = document.getElementById('auth-modal');
         const btns = [document.getElementById('login-btn'), document.getElementById('mobile-login-btn')];
         const closeBtn = document.getElementById('close-modal');
+
         function toggleModal(show) {
             if (show) {
                 modal.classList.remove('opacity-0', 'pointer-events-none');
-                modal.querySelector('div[id="modal-content"]').classList.remove('scale-95');
+                modal.querySelector('#modal-content').classList.remove('scale-95');
                 if (!mobileMenu.classList.contains('hidden')) toggleMobileMenu();
             } else {
                 modal.classList.add('opacity-0', 'pointer-events-none');
-                modal.querySelector('div[id="modal-content"]').classList.add('scale-95');
+                modal.querySelector('#modal-content').classList.add('scale-95');
             }
         }
         btns.forEach(b => b?.addEventListener('click', () => toggleModal(true)));
         closeBtn.addEventListener('click', () => toggleModal(false));
         document.getElementById('modal-backdrop').addEventListener('click', () => toggleModal(false));
-
-        // 3. Cart Drawer
+a
+        // Cart Drawer
         const cartDrawer = document.getElementById('cart-drawer');
         const cartBtns = [document.getElementById('cart-btn'), document.getElementById('mobile-cart-btn')];
         const closeCart = document.getElementById('close-cart');
-        let cartCount = 0;
+
         function toggleCart(show) {
             if (show) {
                 cartDrawer.classList.remove('translate-x-full');
@@ -590,122 +830,8 @@
         cartBtns.forEach(b => b?.addEventListener('click', () => toggleCart(true)));
         closeCart.addEventListener('click', () => toggleCart(false));
 
-        // ----------------------------------------------------
-        // 5. THREE.JS EXPLOSION ANIMATION
-        // ----------------------------------------------------
 
-        // Settings
-        const IMAGE_URL = 'images/pan.jpeg';
-
-        const GRID_SIZE = 14;
-        const EXPLODE_DIST = 400;
-        const WAIT_TIME = 2;
-        const ANIM_SPEED = 2.5;
-
-        const container = document.getElementById('explosion-container');
-
-        if (container) {
-            // Init Scene
-            const scene = new THREE.Scene();
-            // IMPORTANT: Camera aspect ratio based on CONTAINER, not Window
-            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 2000);
-            camera.position.z = 120; // Adjust zoom
-
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            container.appendChild(renderer.domElement);
-
-            // Light
-            scene.add(new THREE.AmbientLight(0xffffff, 1.2));
-            const light = new THREE.DirectionalLight(0xffffff, 1);
-            light.position.set(10, 10, 50);
-            scene.add(light);
-
-            // Texture
-            const textureLoader = new THREE.TextureLoader();
-
-            textureLoader.load(
-                IMAGE_URL,
-                (texture) => { initShards(texture); },
-                undefined,
-                (err) => { console.log("Texture error"); }
-            );
-
-            function initShards(texture) {
-                texture.center.set(0.5, 0.5);
-                const group = new THREE.Group();
-
-                // Scale grid to fit container view
-                const totalW = 140;
-                const totalH = 140;
-                const stepX = totalW / GRID_SIZE;
-                const stepY = totalH / GRID_SIZE;
-                const shards = [];
-
-                for (let i = 0; i < GRID_SIZE; i++) {
-                    for (let j = 0; j < GRID_SIZE; j++) {
-                        const geometry = new THREE.BoxGeometry(stepX, stepY, 2);
-                        const uvs = geometry.attributes.uv.array;
-                        for (let k = 0; k < uvs.length; k += 2) {
-                            uvs[k] = (i + uvs[k]) / GRID_SIZE;
-                            uvs[k + 1] = (j + uvs[k + 1]) / GRID_SIZE;
-                        }
-                        const material = new THREE.MeshStandardMaterial({ map: texture, color: 0xE0D9D3 }); // Tinted with bone color
-                        const mesh = new THREE.Mesh(geometry, material);
-
-                        // Position Logic
-                        const homeX = (i - GRID_SIZE / 2) * stepX + (stepX / 2);
-                        const homeY = (j - GRID_SIZE / 2) * stepY + (stepY / 2);
-                        const homeZ = 0;
-                        const awayX = homeX + (Math.random() - 0.5) * EXPLODE_DIST;
-                        const awayY = homeY + (Math.random() - 0.5) * EXPLODE_DIST;
-                        const awayZ = (Math.random() - 0.5) * EXPLODE_DIST;
-
-                        mesh.position.set(homeX, homeY, homeZ);
-                        group.add(mesh);
-
-                        shards.push({
-                            mesh: mesh,
-                            home: { x: homeX, y: homeY, z: homeZ },
-                            away: { x: awayX, y: awayY, z: awayZ, rx: Math.random() * 6, ry: Math.random() * 6 }
-                        });
-                    }
-                }
-                scene.add(group);
-
-                // GSAP Animation Loop
-                const tl = gsap.timeline({ repeat: -1, repeatDelay: 0 });
-                tl.to({}, { duration: WAIT_TIME })
-                    .to(shards.map(s => s.mesh.position), { x: i => shards[i].away.x, y: i => shards[i].away.y, z: i => shards[i].away.z, duration: ANIM_SPEED, ease: "power3.out" }, "explode")
-                    .to(shards.map(s => s.mesh.rotation), { x: i => shards[i].away.rx, y: i => shards[i].away.ry, duration: ANIM_SPEED, ease: "power3.out" }, "explode")
-                    .to({}, { duration: WAIT_TIME })
-                    .to(shards.map(s => s.mesh.position), { x: i => shards[i].home.x, y: i => shards[i].home.y, z: i => shards[i].home.z, duration: ANIM_SPEED, ease: "power3.inOut" }, "assemble")
-                    .to(shards.map(s => s.mesh.rotation), { x: 0, y: 0, duration: ANIM_SPEED, ease: "power3.inOut" }, "assemble");
-
-                // Gentle Float
-                gsap.to(group.rotation, { y: 0.2, duration: 8, yoyo: true, repeat: -1, ease: "sine.inOut" });
-            }
-
-            // Handle Container Resize
-            // Update lines 655-657 and 788-790 to include setPixelRatio
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
-            });
-
-            function animate() {
-                requestAnimationFrame(animate);
-                renderer.render(scene, camera);
-            }
-            animate();
-        }
-
-        //  products script 
-        // ====================================================
-
+        // --- 4. PRODUCT SLIDER (With Unsplash Placeholders) ---
         const products = [
             { title: "Nomad Watch", category: "ACCESSORIES", desc: "Minimalist analog styling with smart connectivity.", price: "$299", image: "images/pan.jpeg" },
             { title: "Brass Headphones", category: "AUDIO", desc: "Acoustic precision encased in antique brass.", price: "$450", image: "images/pan2.jpeg" },
@@ -714,55 +840,38 @@
         ];
 
         let index = 0;
-        let isAnimating = false;
+        let isAnimating = false; // Debounce flag
 
-        /* ELEMENTS */
-        const section = document.getElementById("products");
         const mainImage = document.getElementById("mainImage");
         const mainTitle = document.getElementById("mainTitle");
         const mainCategory = document.getElementById("mainCategory");
         const mainDesc = document.getElementById("mainDesc");
         const mainPrice = document.getElementById("mainPrice");
-        const mainContent = document.getElementById("mainContent");
         const cardList = document.getElementById("cardList");
+        const mainContent = document.getElementById("mainContent");
 
-        /* INIT */
-        renderCards();
-        updateMain(0, true);
-
-        /* RENDER CARDS */
         function renderCards() {
             cardList.innerHTML = products.map((p, i) => `
-    <div data-i="${i}"
-      class="relative w-[220px] h-[320px] rounded-2xl overflow-hidden cursor-pointer
-             transition-all duration-300
-             ${i === index ? 'scale-100 opacity-100 shadow-xl' : 'scale-90 opacity-50'}">
-      <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover"/>
-      <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-      <span class="absolute bottom-5 left-5 text-white font-semibold">${p.title}</span>
-    </div>
-  `).join("");
+                <div data-i="${i}" class="relative flex-shrink-0 w-[140px] h-[200px] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border-2 ${i === index ? 'border-earth-brass scale-100 opacity-100' : 'border-transparent scale-95 opacity-60'}">
+                    <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-black/20"></div>
+                </div>
+            `).join("");
 
             cardList.querySelectorAll("[data-i]").forEach(card => {
                 card.onclick = () => slideTo(+card.dataset.i);
             });
         }
 
-        /* UPDATE MAIN */
-        function updateMain(i, instant = false) {
+        function updateMain(i) {
             const p = products[i];
             mainImage.src = p.image;
             mainTitle.textContent = p.title;
             mainCategory.textContent = p.category;
             mainDesc.textContent = p.desc;
             mainPrice.textContent = p.price;
-
-            if (instant) {
-                gsap.set([mainImage, mainContent.children], { clearProps: "all" });
-            }
         }
 
-        /* SLIDE CONTROLLER */
         function slideTo(i) {
             if (isAnimating || i === index) return;
             isAnimating = true;
@@ -770,117 +879,134 @@
             const dir = i > index ? 1 : -1;
             index = i;
 
-            gsap.timeline({
-                defaults: { ease: "power3.inOut" },
-                onComplete: () => isAnimating = false
-            })
-                .to(mainImage, { x: -70 * dir, opacity: 0, duration: .35 })
-                .to(mainContent.children, { y: 30, opacity: 0, stagger: .05, duration: .2 }, "<")
-                .call(() => { updateMain(i); renderCards(); })
-                .fromTo(mainImage, { x: 70 * dir, opacity: 0 }, { x: 0, opacity: 1, duration: .45 })
-                .fromTo(mainContent.children,
-                    { y: 40, opacity: 0 },
-                    { y: 0, opacity: 1, stagger: .06, duration: .4 },
-                    "-=.3"
-                );
-        }
-
-        /* NEXT / PREV */
-        function next() { slideTo((index + 1) % products.length); }
-        function prev() { slideTo((index - 1 + products.length) % products.length); }
-
-        /* BUTTONS */
-        document.getElementById("nextBtn").onclick = next;
-        document.getElementById("prevBtn").onclick = prev;
-
-        /* MOUSE WHEEL */
-        let wheelLock = false;
-        section.addEventListener("wheel", e => {
-            if (wheelLock) return;
-            wheelLock = true;
-            e.deltaY > 0 ? next() : prev();
-            setTimeout(() => wheelLock = false, 600);
-        }, { passive: true });
-
-        /* TOUCH SWIPE */
-        let startX = 0;
-        section.addEventListener("touchstart", e => {
-            startX = e.touches[0].clientX;
-        }, { passive: true });
-
-        section.addEventListener("touchend", e => {
-            const dx = e.changedTouches[0].clientX - startX;
-            if (Math.abs(dx) > 50) dx < 0 ? next() : prev();
-        }, { passive: true });
-
-        /* KEYBOARD */
-        document.addEventListener("keydown", e => {
-            if (e.key === "ArrowRight") next();
-            if (e.key === "ArrowLeft") prev();
-        });
-
-        // ==================================================
-        // 3D Animation for Use & Care Section
-        const careContainer = document.getElementById('care-3d-container');
-
-        if (careContainer) {
-            // 1. Scene Setup
-            const careScene = new THREE.Scene();
-
-            // Camera adjusted for the 400px height
-            const careCamera = new THREE.PerspectiveCamera(
-                50,
-                careContainer.clientWidth / careContainer.clientHeight,
-                0.1,
-                1000
-            );
-
-            const careRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            careRenderer.setSize(careContainer.clientWidth, careContainer.clientHeight);
-            careRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            careContainer.appendChild(careRenderer.domElement);
-
-            // 2. Add Geometry (Wireframe Object)
-            const careGeometry = new THREE.IcosahedronGeometry(2.2, 0);
-            const careMaterial = new THREE.MeshBasicMaterial({
-                color: 0xAA9371, // earth-brass
-                wireframe: true,
-                transparent: true,
-                opacity: 0.8
+            // GSAP Transition
+            const tl = gsap.timeline({
+                onComplete: () => { isAnimating = false; }
             });
 
-            const careShape = new THREE.Mesh(careGeometry, careMaterial);
-            careScene.add(careShape);
+            tl.to(mainImage, { x: -50 * dir, opacity: 0, duration: 0.4, ease: "power2.in" })
+                .to(mainContent.children, { y: 20, opacity: 0, stagger: 0.05, duration: 0.3 }, "<")
+                .call(() => {
+                    updateMain(i);
+                    renderCards();
+                })
+                .fromTo(mainImage, { x: 50 * dir, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" })
+                .fromTo(mainContent.children, { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.05, duration: 0.4 }, "-=0.3");
+        }
 
-            // 3. Position
-            careCamera.position.z = 6;
+        updateMain(0);
+        renderCards();
 
-            // 4. Animation Loop
+        document.getElementById("nextBtn").onclick = () => slideTo((index + 1) % products.length);
+        document.getElementById("prevBtn").onclick = () => slideTo((index - 1 + products.length) % products.length);
+
+
+        // --- 5. THREE.JS (Enhanced & Interactive) ---
+        const careContainer = document.getElementById('care-3d-container');
+        if (careContainer) {
+            const scene = new THREE.Scene();
+            // Transparent background
+
+            const camera = new THREE.PerspectiveCamera(50, careContainer.clientWidth / careContainer.clientHeight, 0.1, 1000);
+            camera.position.z = 6;
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(careContainer.clientWidth, careContainer.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            careContainer.appendChild(renderer.domElement);
+
+            // Outer Shape
+            const geo1 = new THREE.IcosahedronGeometry(2.2, 0);
+            const mat1 = new THREE.MeshBasicMaterial({ color: 0xAA9371, wireframe: true, transparent: true, opacity: 0.8 });
+            const mesh1 = new THREE.Mesh(geo1, mat1);
+            scene.add(mesh1);
+
+            // Inner Shape (Complexity)
+            const geo2 = new THREE.OctahedronGeometry(1.2, 0);
+            const mat2 = new THREE.MeshBasicMaterial({ color: 0x524639, wireframe: true });
+            const mesh2 = new THREE.Mesh(geo2, mat2);
+            scene.add(mesh2);
+
+            // Mouse Interaction
+            let mouseX = 0;
+            let mouseY = 0;
+            careContainer.addEventListener('mousemove', (e) => {
+                const rect = careContainer.getBoundingClientRect();
+                mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+            });
+
             function animateCare() {
                 requestAnimationFrame(animateCare);
 
-                // Slow, premium rotation
-                careShape.rotation.x += 0.005;
-                careShape.rotation.y += 0.008;
+                // Constant rotation
+                mesh1.rotation.y += 0.003;
+                mesh2.rotation.y -= 0.005;
+                mesh1.rotation.x += 0.002;
 
-                // Gentle floating effect
-                careShape.position.y = Math.sin(Date.now() * 0.001) * 0.2;
+                // Mouse influence (Parallax)
+                mesh1.rotation.y += mouseX * 0.05;
+                mesh1.rotation.x -= mouseY * 0.05;
 
-                careRenderer.render(careScene, careCamera);
+                renderer.render(scene, camera);
             }
             animateCare();
 
-            // 5. Handle Resize
             window.addEventListener('resize', () => {
-                if (!careContainer) return;
-
-                careCamera.aspect = careContainer.clientWidth / careContainer.clientHeight;
-                careCamera.updateProjectionMatrix();
-                careRenderer.setSize(careContainer.clientWidth, careContainer.clientHeight);
+                camera.aspect = careContainer.clientWidth / careContainer.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(careContainer.clientWidth, careContainer.clientHeight);
             });
         }
-
     </script>
+
+    <!-- luxury -->
+    <script>
+        const carousel = document.getElementById("product-carousel");
+        const items = gsap.utils.toArray(".carousel-item");
+
+        // Clone items once
+        items.forEach(item => {
+            carousel.appendChild(item.cloneNode(true));
+        });
+
+        const gap = 24; // gap-6
+        const itemWidth = items[0].offsetWidth + gap;
+        const totalWidth = itemWidth * items.length;
+
+        // Infinite loop tween
+        const carouselTween = gsap.to(carousel, {
+            x: `-=${totalWidth}`,
+            duration: 28,
+            ease: "linear",
+            repeat: -1,
+            modifiers: {
+                x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+            }
+        });
+
+        // Pause on hover
+        carousel.addEventListener("mouseenter", () => carouselTween.pause());
+        carousel.addEventListener("mouseleave", () => carouselTween.resume());
+
+        // Manual controls
+        const step = itemWidth;
+        document.getElementById("carousel-prev").onclick = () => {
+            gsap.to(carousel, { x: `+=${step}`, duration: 0.6, ease: "power2.out" });
+        };
+        document.getElementById("carousel-next").onclick = () => {
+            gsap.to(carousel, { x: `-=${step}`, duration: 0.6, ease: "power2.out" });
+        };
+
+        // Buy Now (works on clones)
+        document.addEventListener("click", e => {
+            if (e.target.classList.contains("buy-btn")) {
+                toggleCart(true);
+            }
+        });
+    </script>
+
+
 
 
 </body>
