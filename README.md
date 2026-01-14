@@ -1,5 +1,8 @@
 # ITRIK E-Commerce 🛍️
 
+#LIVE HERE------ >  https://itrik-e-commerce.vercel.app/
+
+
 A responsive and modern frontend for an e-commerce website. This project serves as the user interface for an online shopping platform, featuring a clean layout and essential shopping components.
 
 ## 📋 Table of Contents
