@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ITRIK | Earthy Elegance</title>
+    <meta name="description" content="Premium earthy aesthetics for the modern professional.">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -14,7 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- Tailwind Configuration with Custom Colors -->
+    <!-- Custom Tailwind Configuration -->
     <script>
         tailwind.config = {
             theme: {
@@ -41,7 +42,7 @@
         }
     </script>
 
-    <!-- Custom CSS -->
+    <!-- custom css -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;700&display=swap');
 
@@ -53,7 +54,6 @@
             background-color: #E0D9D3;
             color: #171614;
             -webkit-font-smoothing: antialiased;
-            /* Premium font rendering */
         }
 
         /* Custom Scrollbar */
@@ -74,7 +74,7 @@
             background: #524639;
         }
 
-        /* Glassmorphism */
+        /* Utilities */
         .glass-nav {
             background: rgba(224, 217, 211, 0.85);
             backdrop-filter: blur(12px);
@@ -88,7 +88,20 @@
             border: 1px solid rgba(145, 133, 116, 0.2);
         }
 
-        /* Preloader */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        body.overflow-hidden {
+            overflow: hidden !important;
+        }
+
+        /* Loader & Animations */
         #preloader {
             position: fixed;
             inset: 0;
@@ -100,7 +113,6 @@
             transition: opacity 0.6s ease-out, visibility 0.6s;
         }
 
-        /* Animations */
         .animate-blob {
             animation: blob 10s infinite alternate;
         }
@@ -126,53 +138,41 @@
                 transform: translate(0px, 0px) scale(1);
             }
         }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Scroll Lock Class */
-        body.overflow-hidden {
-            overflow: hidden !important;
-        }
     </style>
 </head>
 
 <body class="text-earth-charcoal selection:bg-earth-brass selection:text-white">
 
-    <!-- Preloader -->
-    <div id="preloader">
+    <!-- Icon before preloader -->
+    <div id="preloader" aria-hidden="true">
         <div class="text-center">
             <i class="fa-solid fa-layer-group text-6xl text-earth-brass mb-4 animate-bounce"></i>
             <h2 class="text-2xl font-display font-bold tracking-widest text-earth-charcoal">ITRIK</h2>
         </div>
     </div>
 
-    <!-- Modals and Drawers -->
+    <!-- Authentication Modal -->
     <div id="auth-modal"
-        class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300"
+        role="dialog" aria-modal="true">
         <div class="absolute inset-0 bg-earth-charcoal/80 backdrop-blur-sm" id="modal-backdrop"></div>
         <div class="relative w-full max-w-md p-8 glass-dark rounded-3xl shadow-premium transform scale-95 transition-transform duration-300"
             id="modal-content">
-            <button id="close-modal"
-                class="absolute top-4 right-4 text-earth-taupe hover:text-white transition-colors"><i
-                    class="fa-solid fa-xmark text-2xl"></i></button>
+            <button id="close-modal" class="absolute top-4 right-4 text-earth-taupe hover:text-white transition-colors"
+                aria-label="Close Modal">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
             <div class="text-center mb-8">
                 <i class="fa-solid fa-layer-group text-4xl text-earth-brass mb-4"></i>
                 <h2 class="text-2xl font-bold text-white font-display">Welcome to ITRIK</h2>
                 <p class="text-earth-taupe text-sm mt-2">Sign in to access premium assets</p>
             </div>
-            <form class="space-y-4">
+            <form class="space-y-4" onsubmit="event.preventDefault();">
                 <input type="email" placeholder="Email"
                     class="w-full bg-white/5 border border-earth-taupe/30 text-white rounded-xl px-4 py-3 focus:border-earth-brass focus:outline-none placeholder-earth-taupe">
                 <input type="password" placeholder="Password"
                     class="w-full bg-white/5 border border-earth-taupe/30 text-white rounded-xl px-4 py-3 focus:border-earth-brass focus:outline-none placeholder-earth-taupe">
-                <button type="button"
+                <button
                     class="w-full bg-earth-brass hover:bg-white hover:text-earth-charcoal text-white font-bold py-3 rounded-xl transition-all">LOGIN</button>
             </form>
         </div>
@@ -183,8 +183,10 @@
         class="fixed inset-y-0 right-0 w-80 bg-earth-base shadow-2xl z-[90] transform translate-x-full transition-transform duration-300 p-6 flex flex-col border-l border-earth-taupe">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-xl font-bold font-display text-earth-charcoal">Your Cart</h2>
-            <button id="close-cart" class="text-earth-walnut hover:text-earth-charcoal transition-colors"><i
-                    class="fa-solid fa-xmark text-xl"></i></button>
+            <button id="close-cart" class="text-earth-walnut hover:text-earth-charcoal transition-colors"
+                aria-label="Close Cart">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
         </div>
         <div class="flex-1 flex items-center justify-center text-earth-walnut flex-col">
             <i class="fa-solid fa-basket-shopping text-4xl mb-4 opacity-40 text-earth-taupe"></i>
@@ -194,7 +196,7 @@
             class="w-full py-4 bg-earth-charcoal text-white font-bold rounded-xl hover:bg-earth-brass hover:shadow-glow transition-all">CHECKOUT</button>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation Bar -->
     <nav
         class="fixed top-5 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 rounded-full glass-nav transition-all duration-300 py-3 px-6">
         <div class="flex justify-between items-center">
@@ -213,7 +215,8 @@
 
             <div class="hidden md:flex items-center gap-5">
                 <button id="cart-btn"
-                    class="relative text-earth-charcoal hover:text-earth-brass transition-colors cursor-pointer">
+                    class="relative text-earth-charcoal hover:text-earth-brass transition-colors cursor-pointer"
+                    aria-label="Open Cart">
                     <i class="fa-solid fa-bag-shopping text-xl"></i>
                     <span id="cart-count"
                         class="absolute -top-1 -right-2 bg-earth-brass text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
@@ -226,7 +229,8 @@
             </div>
 
             <button id="mobile-toggle"
-                class="md:hidden text-2xl text-earth-charcoal cursor-pointer transition-transform duration-300">
+                class="md:hidden text-2xl text-earth-charcoal cursor-pointer transition-transform duration-300"
+                aria-label="Menu">
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
         </div>
@@ -252,7 +256,7 @@
         </div>
     </nav>
 
-    <!-- Main Content home -->
+    <!-- Home Section -->
     <section id="home"
         class="relative min-h-screen flex items-center justify-center overflow-hidden bg-earth-base pt-32 pb-10 md:pt-20 md:pb-0">
         <div class="absolute inset-0 opacity-20 pointer-events-none">
@@ -278,45 +282,39 @@
                     class="px-8 py-4 bg-earth-charcoal text-white rounded-full font-bold shadow-lg hover:shadow-premium hover:bg-earth-brass hover:-translate-y-1 transition-all cursor-pointer inline-block">EXPLORE
                     COLLECTION</a>
             </div>
-            <!-- Product Video -->
-            <div class="relative group cursor-pointer rounded-[3rem] overflow-hidden bg-[#171614] aspect-video max-w-full
-            shadow-2xl transition-all duration-700 ease-out hover:shadow-glow" data-aos="zoom-in"
-                data-aos-duration="400">
 
-                <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-90
-               group-hover:scale-105
-               transition-transform duration-700 ease-out">
+            <div class="relative group cursor-pointer rounded-[3rem] overflow-hidden bg-[#171614] aspect-video max-w-full shadow-2xl transition-all duration-700 ease-out hover:shadow-glow"
+                data-aos="zoom-in" data-aos-duration="400">
+                <video autoplay muted loop playsinline preload="metadata"
+                    class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 ease-out">
                     <source src="images/panVIdeo - Trim.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-
-                <!-- Cinematic overlay -->
-                <div class="absolute inset-0 bg-gradient-to-t
-                    from-[#171614]/40 to-transparent
-                    pointer-events-none">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#171614]/40 to-transparent pointer-events-none">
                 </div>
-
             </div>
-
         </div>
     </section>
-
-    <!-- Features -->
+    <!-- Features Section -->
     <section class="py-16 bg-[#E8E2DD] border-b border-earth-taupe/20">
         <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="0"><i
+            <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="0">
+                <i
                     class="fa-solid fa-gem text-3xl text-earth-brass mb-4 group-hover:scale-110 transition-transform"></i>
                 <h3 class="font-bold text-earth-charcoal">Premium Material</h3>
             </div>
-            <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="100"><i
+            <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                <i
                     class="fa-solid fa-truck-fast text-3xl text-earth-brass mb-4 group-hover:scale-110 transition-transform"></i>
                 <h3 class="font-bold text-earth-charcoal">Global Shipping</h3>
             </div>
-            <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="200"><i
+            <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                <i
                     class="fa-solid fa-leaf text-3xl text-earth-brass mb-4 group-hover:scale-110 transition-transform"></i>
                 <h3 class="font-bold text-earth-charcoal">Eco Conscious</h3>
             </div>
-            <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="300"><i
+            <div class="group cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                <i
                     class="fa-solid fa-headset text-3xl text-earth-brass mb-4 group-hover:scale-110 transition-transform"></i>
                 <h3 class="font-bold text-earth-charcoal">Concierge Support</h3>
             </div>
@@ -326,60 +324,36 @@
     <!-- About Section -->
     <section id="about" class="py-24 bg-earth-base overflow-hidden">
         <div class="container mx-auto px-6">
-
-            <!-- 🔥 Section Heading -->
             <div class="text-center mb-10" data-aos="fade-up">
-                <span class="text-earth-brass font-bold tracking-[0.35em] uppercase text-sm block mb-3">
-                    About Us
-                </span>
-                <h3 class="text-4xl md:text-3xl font-display font-bold text-earth-charcoal">
-                    Crafted with Purpose
-                </h3>
+                <span class="text-earth-brass font-bold tracking-[0.35em] uppercase text-sm block mb-3">About Us</span>
+                <h3 class="text-4xl md:text-3xl font-display font-bold text-earth-charcoal">Crafted with Purpose</h3>
             </div>
 
             <div class="flex flex-col md:flex-row items-center gap-16">
                 <div class="w-full md:w-1/2 relative" data-aos="fade-right" data-aos-duration="1000">
                     <div class="absolute -top-4 -left-4 w-24 h-24 bg-earth-brass/20 rounded-full blur-xl"></div>
-
-                    <!-- Video Card -->
-                    <div class="relative group cursor-pointer rounded-[3rem] overflow-hidden bg-[#171614] aspect-video max-w-full
-                    shadow-2xl transition-all duration-700 ease-out hover:shadow-glow" data-aos="zoom-in"
-                        data-aos-duration="400">
-
-                        <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-90
-                               group-hover:scale-105
-                               transition-transform duration-700 ease-out">
+                    <div class="relative group cursor-pointer rounded-[3rem] overflow-hidden bg-[#171614] aspect-video max-w-full shadow-2xl transition-all duration-700 ease-out hover:shadow-glow"
+                        data-aos="zoom-in" data-aos-duration="400">
+                        <video autoplay muted loop playsinline preload="metadata"
+                            class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 ease-out">
                             <source src="images/product_Video1.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
                         </video>
-
-                        <!-- Cinematic overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t
-                        from-[#171614]/40 to-transparent
-                        pointer-events-none">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#171614]/40 to-transparent pointer-events-none">
                         </div>
                     </div>
                 </div>
 
-                <!-- Text Content -->
                 <div class="w-full md:w-1/2" data-aos="fade-left" data-aos-duration="1000">
-                    <h4 class="text-earth-brass font-bold tracking-widest uppercase mb-4">
-                        The Philosophy
-                    </h4>
-
+                    <h4 class="text-earth-brass font-bold tracking-widest uppercase mb-4">The Philosophy</h4>
                     <h2 class="text-4xl md:text-5xl font-display font-bold text-earth-charcoal mb-6 leading-tight">
-                        Nature Meets <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-earth-taupe to-earth-charcoal">
-                            Innovation.
-                        </span>
+                        Nature Meets <br> <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-earth-taupe to-earth-charcoal">Innovation.</span>
                     </h2>
-
                     <p class="text-earth-walnut text-lg leading-relaxed mb-8">
-                        At ITRIK, we strip away the unnecessary.
-                        Our palette is drawn from the earth—Brass, Walnut, and Stone—
-                        engineered into tools that feel as good as they look.
+                        At ITRIK, we strip away the unnecessary. Our palette is drawn from the earth—Brass, Walnut, and
+                        Stone—engineered into tools that feel as good as they look.
                     </p>
-
                     <div class="grid grid-cols-2 gap-6 mb-8">
                         <div class="border-l-4 border-earth-brass pl-4">
                             <span class="block text-3xl font-bold text-earth-charcoal">10k+</span>
@@ -390,9 +364,8 @@
                             <span class="text-sm text-earth-walnut uppercase tracking-wide">Sustainable</span>
                         </div>
                     </div>
-
-                    <a href="#contact" class="text-earth-charcoal font-bold border-b-2 border-earth-brass
-                           hover:text-earth-brass transition-colors pb-1">
+                    <a href="#contact"
+                        class="text-earth-charcoal font-bold border-b-2 border-earth-brass hover:text-earth-brass transition-colors pb-1">
                         Read Our Full Story <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
                 </div>
@@ -402,252 +375,125 @@
 
     <!-- Products Section -->
     <section id="products" class="min-h-screen px-4 py-24 overflow-hidden">
-
-        <!-- 🔥 Section Heading -->
         <div class="max-w-7xl mx-auto text-center mb-8" data-aos="fade-up">
-            <h2 class="text-earth-brass font-bold tracking-[0.35em] uppercase text-sm text-center mb-3">
-                Trendy Items
+            <h2 class="text-earth-brass font-bold tracking-[0.35em] uppercase text-sm text-center mb-3">Trendy Items
             </h2>
         </div>
 
         <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-center">
-
-            <!-- MAIN PRODUCT DISPLAY -->
-            <div class="lg:col-span-7 relative h-[450px] md:h-[550px] rounded-[2.5rem]
-                   overflow-hidden bg-[#171614] shadow-2xl">
-
-                <img id="mainImage" class="absolute inset-0 w-full h-full object-cover object-center
-                       transition-transform duration-700" />
-
-                <div class="absolute inset-0 bg-gradient-to-t
-                        from-[#171614] via-[#171614]/40 to-transparent"></div>
+            <div
+                class="lg:col-span-7 relative h-[450px] md:h-[550px] rounded-[2.5rem] overflow-hidden bg-[#171614] shadow-2xl">
+                <img id="mainImage" alt="Main Product"
+                    class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700" />
+                <div class="absolute inset-0 bg-gradient-to-t from-[#171614] via-[#171614]/40 to-transparent"></div>
 
                 <div id="mainContent" class="absolute bottom-8 md:bottom-10 left-6 md:left-10 max-w-lg z-10">
-
                     <div id="mainCategory" class="text-[#AA9371] text-xs tracking-[0.35em] font-bold uppercase mb-2">
                     </div>
-
-                    <h2 id="mainTitle" class="text-3xl md:text-5xl font-bold text-white mb-4 font-display">
-                    </h2>
-
-                    <p id="mainDesc" class="text-gray-300 mb-6 leading-relaxed text-sm md:text-base">
-                    </p>
-
+                    <h2 id="mainTitle" class="text-3xl md:text-5xl font-bold text-white mb-4 font-display"></h2>
+                    <p id="mainDesc" class="text-gray-300 mb-6 leading-relaxed text-sm md:text-base"></p>
                     <div class="flex flex-wrap gap-4 items-center">
                         <span id="mainPrice" class="text-lg font-bold text-white"></span>
-                        <button class="px-7 py-3 rounded-full bg-[#AA9371] text-[#171614]
-                               text-xs font-bold uppercase tracking-widest
-                               hover:bg-white transition">
+                        <button
+                            class="px-7 py-3 rounded-full bg-[#AA9371] text-[#171614] text-xs font-bold uppercase tracking-widest hover:bg-white transition"
+                            onclick="document.getElementById('cart-btn').click()">
                             Buy Now
                         </button>
                     </div>
                 </div>
 
-                <!-- Navigation Buttons -->
                 <div class="absolute bottom-6 right-6 flex gap-3 z-20">
-                    <button id="prevBtn" class="w-12 h-12 rounded-full bg-white/10 border border-white/20
-                           text-white hover:bg-[#AA9371] transition flex items-center justify-center">
+                    <button id="prevBtn"
+                        class="w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white hover:bg-[#AA9371] transition flex items-center justify-center"
+                        aria-label="Previous Product">
                         <i class="fa-solid fa-arrow-left"></i>
                     </button>
-                    <button id="nextBtn" class="w-12 h-12 rounded-full bg-white/10 border border-white/20
-                           text-white hover:bg-[#AA9371] transition flex items-center justify-center">
+                    <button id="nextBtn"
+                        class="w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white hover:bg-[#AA9371] transition flex items-center justify-center"
+                        aria-label="Next Product">
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- PRODUCT CARD STRIP -->
             <div class="lg:col-span-5 overflow-hidden">
                 <div id="cardList" class="flex gap-4 overflow-x-auto no-scrollbar pb-4 pl-2"></div>
             </div>
-
         </div>
     </section>
 
-    <!-- Luxury Product Carousel -->
+    <!-- Featured Products Section -->
     <section class="relative">
-
-        <!-- 🔁 Luxury Product Carousel -->
         <div class="relative max-w-7xl mx-auto mt-12 overflow-hidden">
-
             <div id="product-carousel" class="flex gap-6 items-center will-change-transform">
-
-                <!-- PRODUCT CARD (repeat as needed) -->
-                <div class="carousel-item relative group
-        w-[260px] h-[360px] md:w-[280px] md:h-[380px]
-        flex-shrink-0 rounded-[2rem] overflow-hidden
-        bg-earth-charcoal shadow-2xl">
-
-                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
-             transition-transform duration-700 group-hover:scale-110"
+                <div
+                    class="carousel-item relative group w-[260px] h-[360px] md:w-[280px] md:h-[380px] flex-shrink-0 rounded-[2rem] overflow-hidden bg-earth-charcoal shadow-2xl">
+                    <img loading="lazy"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop"
                         alt="Nomad Watch">
-
                     <div class="absolute inset-0 bg-black/35"></div>
-
                     <div class="absolute bottom-5 left-5 right-5 z-10">
-                        <h4 class="text-white font-bold text-lg mb-2 font-display">
-                            Nomad Watch
-                        </h4>
-
-                        <button class="buy-btn w-full py-3 rounded-full
-            bg-earth-brass text-earth-charcoal
-            text-xs font-bold uppercase tracking-widest
-            hover:bg-white transition">
-                            Buy Now
-                        </button>
+                        <h4 class="text-white font-bold text-lg mb-2 font-display">Nomad Watch</h4>
+                        <button
+                            class="buy-btn w-full py-3 rounded-full bg-earth-brass text-earth-charcoal text-xs font-bold uppercase tracking-widest hover:bg-white transition">Buy
+                            Now</button>
                     </div>
                 </div>
-
-                <!-- COPY ABOVE CARD FOR OTHER PRODUCTS (YOUR IMAGES ARE FINE) -->
-                <div class="carousel-item relative group
-                w-[260px] h-[360px] md:w-[280px] md:h-[380px]
-                flex-shrink-0 rounded-[2rem] overflow-hidden
-                bg-earth-charcoal shadow-2xl">
-
-                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
-                  transition-transform duration-700 group-hover:scale-110" src="images/pan5.png" alt="Product 1">
-
-                    <!-- Overlay -->
+                <div
+                    class="carousel-item relative group w-[260px] h-[360px] md:w-[280px] md:h-[380px] flex-shrink-0 rounded-[2rem] overflow-hidden bg-earth-charcoal shadow-2xl">
+                    <img loading="lazy"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        src="images/pan5.png" alt="Pan 5">
                     <div class="absolute inset-0 bg-black/35"></div>
-
-                    <!-- Content -->
                     <div class="absolute bottom-5 left-5 right-5 z-10">
-                        <h4 class="text-white font-bold text-lg mb-2 font-display">
-                            Nomad Watch
-                        </h4>
-
-                        <button class="buy-btn w-full py-3 rounded-full
-                 bg-earth-brass text-earth-charcoal
-                 text-xs font-bold uppercase tracking-widest
-                 hover:bg-white transition">
-                            Buy Now
-                        </button>
+                        <h4 class="text-white font-bold text-lg mb-2 font-display">Cast Iron</h4>
+                        <button
+                            class="buy-btn w-full py-3 rounded-full bg-earth-brass text-earth-charcoal text-xs font-bold uppercase tracking-widest hover:bg-white transition">Buy
+                            Now</button>
                     </div>
                 </div>
-                <div class="carousel-item relative group
-                w-[260px] h-[360px] md:w-[280px] md:h-[380px]
-                flex-shrink-0 rounded-[2rem] overflow-hidden
-                bg-earth-charcoal shadow-2xl">
-
-                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
-                  transition-transform duration-700 group-hover:scale-110" src="images/pan.jpeg" alt="Product 1">
-
-                    <!-- Overlay -->
+                <div
+                    class="carousel-item relative group w-[260px] h-[360px] md:w-[280px] md:h-[380px] flex-shrink-0 rounded-[2rem] overflow-hidden bg-earth-charcoal shadow-2xl">
+                    <img loading="lazy"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        src="images/pan.jpeg" alt="Pan 1">
                     <div class="absolute inset-0 bg-black/35"></div>
-
-                    <!-- Content -->
                     <div class="absolute bottom-5 left-5 right-5 z-10">
-                        <h4 class="text-white font-bold text-lg mb-2 font-display">
-                            Nomad Watch
-                        </h4>
-
-                        <button class="buy-btn w-full py-3 rounded-full
-                 bg-earth-brass text-earth-charcoal
-                 text-xs font-bold uppercase tracking-widest
-                 hover:bg-white transition">
-                            Buy Now
-                        </button>
+                        <h4 class="text-white font-bold text-lg mb-2 font-display">Seared Pan</h4>
+                        <button
+                            class="buy-btn w-full py-3 rounded-full bg-earth-brass text-earth-charcoal text-xs font-bold uppercase tracking-widest hover:bg-white transition">Buy
+                            Now</button>
                     </div>
                 </div>
-                <div class="carousel-item relative group
-                w-[260px] h-[360px] md:w-[280px] md:h-[380px]
-                flex-shrink-0 rounded-[2rem] overflow-hidden
-                bg-earth-charcoal shadow-2xl">
-
-                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
-                  transition-transform duration-700 group-hover:scale-110" src="images/pan4.jpeg" alt="Product 1">
-
-                    <!-- Overlay -->
+                <div
+                    class="carousel-item relative group w-[260px] h-[360px] md:w-[280px] md:h-[380px] flex-shrink-0 rounded-[2rem] overflow-hidden bg-earth-charcoal shadow-2xl">
+                    <img loading="lazy"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        src="images/pan2.jpeg" alt="Pan 2">
                     <div class="absolute inset-0 bg-black/35"></div>
-
-                    <!-- Content -->
                     <div class="absolute bottom-5 left-5 right-5 z-10">
-                        <h4 class="text-white font-bold text-lg mb-2 font-display">
-                            Nomad Watch
-                        </h4>
-
-                        <button class="buy-btn w-full py-3 rounded-full
-                 bg-earth-brass text-earth-charcoal
-                 text-xs font-bold uppercase tracking-widest
-                 hover:bg-white transition">
-                            Buy Now
-                        </button>
-                    </div>
-                </div>
-                <div class="carousel-item relative group
-                w-[260px] h-[360px] md:w-[280px] md:h-[380px]
-                flex-shrink-0 rounded-[2rem] overflow-hidden
-                bg-earth-charcoal shadow-2xl">
-
-                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
-                  transition-transform duration-700 group-hover:scale-110" src="images/pan2.jpeg" alt="Product 1">
-
-                    <!-- Overlay -->
-                    <div class="absolute inset-0 bg-black/35"></div>
-
-                    <!-- Content -->
-                    <div class="absolute bottom-5 left-5 right-5 z-10">
-                        <h4 class="text-white font-bold text-lg mb-2 font-display">
-                            Nomad Watch
-                        </h4>
-
-                        <button class="buy-btn w-full py-3 rounded-full
-                 bg-earth-brass text-earth-charcoal
-                 text-xs font-bold uppercase tracking-widest
-                 hover:bg-white transition">
-                            Buy Now
-                        </button>
-                    </div>
-                </div>
-                <div class="carousel-item relative group
-                w-[260px] h-[360px] md:w-[280px] md:h-[380px]
-                flex-shrink-0 rounded-[2rem] overflow-hidden
-                bg-earth-charcoal shadow-2xl">
-
-                    <img loading="lazy" class="absolute inset-0 w-full h-full object-cover
-                  transition-transform duration-700 group-hover:scale-110" src="images/pan3.jpeg" alt="Product 1">
-
-                    <!-- Overlay -->
-                    <div class="absolute inset-0 bg-black/35"></div>
-
-                    <!-- Content -->
-                    <div class="absolute bottom-5 left-5 right-5 z-10">
-                        <h4 class="text-white font-bold text-lg mb-2 font-display">
-                            Nomad Watch
-                        </h4>
-
-                        <button class="buy-btn w-full py-3 rounded-full
-                 bg-earth-brass text-earth-charcoal
-                 text-xs font-bold uppercase tracking-widest
-                 hover:bg-white transition">
-                            Buy Now
-                        </button>
+                        <h4 class="text-white font-bold text-lg mb-2 font-display">Iron Chef</h4>
+                        <button
+                            class="buy-btn w-full py-3 rounded-full bg-earth-brass text-earth-charcoal text-xs font-bold uppercase tracking-widest hover:bg-white transition">Buy
+                            Now</button>
                     </div>
                 </div>
             </div>
 
-            <!-- ⬅️➡️ Carousel Controls (INSIDE RELATIVE WRAPPER) -->
-            <div class="absolute inset-y-0 left-0 right-0
-                flex items-center justify-between
-                px-4 pointer-events-none z-20">
-
-                <button id="carousel-prev" class="pointer-events-auto w-12 h-12 rounded-full
-        bg-earth-charcoal/80 text-white
-        flex items-center justify-center
-        hover:bg-earth-brass transition">
+            <div
+                class="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-4 pointer-events-none z-20">
+                <button id="carousel-prev"
+                    class="pointer-events-auto w-12 h-12 rounded-full bg-earth-charcoal/80 text-white flex items-center justify-center hover:bg-earth-brass transition"
+                    aria-label="Previous">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
-
-                <button id="carousel-next" class="pointer-events-auto w-12 h-12 rounded-full
-        bg-earth-charcoal/80 text-white
-        flex items-center justify-center
-        hover:bg-earth-brass transition">
+                <button id="carousel-next"
+                    class="pointer-events-auto w-12 h-12 rounded-full bg-earth-charcoal/80 text-white flex items-center justify-center hover:bg-earth-brass transition"
+                    aria-label="Next">
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
-
             </div>
-
         </div>
     </section>
 
@@ -697,7 +543,7 @@
         </div>
     </section>
 
-    <!-- Elevate Your Everyday Section -->
+    <!-- CTA Section -->
     <section class="py-32 bg-earth-charcoal text-white relative overflow-hidden text-center" data-aos="zoom-in">
         <div class="container mx-auto px-6 relative z-10">
             <h2 class="text-5xl font-display font-bold mb-8 text-[#E0D9D3]">Elevate Your Everyday.</h2>
@@ -761,254 +607,261 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <!-- Custom JavaScript animations -->
+    <!-- Custom JavaScript -->
     <script>
-        // --- 1. PRELOADER ---
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
-            AOS.init({ duration: 800, once: true, offset: 100 });
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. UI UTILITIES (Drawers, Modals) ---
+            const ui = {
+                toggle: (elId, show, classRem, classAdd) => {
+                    const el = document.getElementById(elId);
+                    if (!el) return;
+                    if (show) {
+                        el.classList.remove(...classRem);
+                        if (classAdd.length) el.classList.add(...classAdd);
+                    } else {
+                        el.classList.add(...classRem);
+                        if (classAdd.length) el.classList.remove(...classAdd);
+                    }
+                },
+
+                mobileMenu: () => {
+                    const menu = document.getElementById('mobile-menu');
+                    const toggle = document.getElementById('mobile-toggle');
+                    if (!menu || !toggle) return;
+
+                    const isHidden = menu.classList.contains('hidden');
+                    if (isHidden) {
+                        menu.classList.remove('hidden');
+                        menu.classList.add('flex');
+                        toggle.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                        document.body.classList.add('overflow-hidden');
+                    } else {
+                        menu.classList.add('hidden');
+                        menu.classList.remove('flex');
+                        toggle.innerHTML = '<i class="fa-solid fa-bars-staggered"></i>';
+                        document.body.classList.remove('overflow-hidden');
+                    }
+                }
+            };
+
+            // Event Listeners for UI
+            document.getElementById('mobile-toggle')?.addEventListener('click', ui.mobileMenu);
+            document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', ui.mobileMenu));
+
+            // Cart
+            const toggleCart = (show) => ui.toggle('cart-drawer', show, ['translate-x-full'], []);
+            ['cart-btn', 'mobile-cart-btn'].forEach(id => document.getElementById(id)?.addEventListener('click', () => toggleCart(true)));
+            document.getElementById('close-cart')?.addEventListener('click', () => toggleCart(false));
+
+            // Modal
+            const toggleModal = (show) => {
+                const modal = document.getElementById('auth-modal');
+                if (!modal) return;
+                const content = modal.querySelector('#modal-content');
+                if (show) {
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    content.classList.remove('scale-95');
+                } else {
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                    content.classList.add('scale-95');
+                }
+            };
+            ['login-btn', 'mobile-login-btn'].forEach(id => document.getElementById(id)?.addEventListener('click', () => toggleModal(true)));
+            ['close-modal', 'modal-backdrop'].forEach(id => document.getElementById(id)?.addEventListener('click', () => toggleModal(false)));
+
+
+            // --- 2. AOS ANIMATION INIT ---
+            setTimeout(() => {
+                document.getElementById('preloader').style.opacity = '0';
+                document.getElementById('preloader').style.visibility = 'hidden';
+                AOS.init({ duration: 800, once: true, offset: 100 });
+            }, 300);
+
+
+            // --- 3. PRODUCT SLIDER ---
+            const initProductSlider = () => {
+                const products = [
+                    { title: "Nomad Watch", category: "ACCESSORIES", desc: "Minimalist analog styling with smart connectivity.", price: "$299", image: "images/pan.jpeg" },
+                    { title: "Brass Headphones", category: "AUDIO", desc: "Acoustic precision encased in antique brass.", price: "$450", image: "images/pan2.jpeg" },
+                    { title: "Analog Camera", category: "PHOTOGRAPHY", desc: "Raw film character with modern reliability.", price: "$129", image: "images/pan3.jpeg" },
+                    { title: "Ceramic Lens", category: "PROFESSIONAL", desc: "Precision ceramic glass engineered for heat resistance.", price: "$899", image: "images/pan4.jpeg" }
+                ];
+
+                let index = 0;
+                let isAnimating = false;
+                const els = {
+                    img: document.getElementById("mainImage"),
+                    title: document.getElementById("mainTitle"),
+                    cat: document.getElementById("mainCategory"),
+                    desc: document.getElementById("mainDesc"),
+                    price: document.getElementById("mainPrice"),
+                    list: document.getElementById("cardList"),
+                    content: document.getElementById("mainContent")
+                };
+
+                const update = (i) => {
+                    const p = products[i];
+                    // Error handling for missing images
+                    els.img.onerror = function () { this.src = 'https://via.placeholder.com/600x800?text=No+Image'; };
+                    els.img.src = p.image;
+
+                    els.title.textContent = p.title;
+                    els.cat.textContent = p.category;
+                    els.desc.textContent = p.desc;
+                    els.price.textContent = p.price;
+
+                    // Render mini cards
+                    els.list.innerHTML = products.map((prod, idx) => `
+                        <div onclick="window.dispatchEvent(new CustomEvent('slideRequest', {detail: ${idx}}))" 
+                             class="relative flex-shrink-0 w-[140px] h-[200px] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border-2 ${idx === index ? 'border-earth-brass scale-100 opacity-100' : 'border-transparent scale-95 opacity-60'}">
+                            <img src="${prod.image}" class="absolute inset-0 w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'"/>
+                            <div class="absolute inset-0 bg-black/20"></div>
+                        </div>
+                    `).join("");
+                };
+
+                const slide = (targetI) => {
+                    if (isAnimating || targetI === index) return;
+                    isAnimating = true;
+                    const dir = targetI > index ? 1 : -1;
+                    index = targetI;
+
+                    const tl = gsap.timeline({ onComplete: () => isAnimating = false });
+                    tl.to(els.img, { x: -50 * dir, opacity: 0, duration: 0.4, ease: "power2.in" })
+                        .to(els.content.children, { y: 20, opacity: 0, stagger: 0.05, duration: 0.3 }, "<")
+                        .call(() => update(index))
+                        .fromTo(els.img, { x: 50 * dir, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" })
+                        .fromTo(els.content.children, { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.05, duration: 0.4 }, "-=0.3");
+                };
+
+                // Init
+                update(0);
+
+                // Listeners
+                document.getElementById("nextBtn").onclick = () => slide((index + 1) % products.length);
+                document.getElementById("prevBtn").onclick = () => slide((index - 1 + products.length) % products.length);
+                window.addEventListener('slideRequest', (e) => slide(e.detail));
+            };
+            initProductSlider();
+
+
+            // --- 4. OPTIMIZED INFINITE SCROLL ---
+            const initInfiniteCarousel = () => {
+                const carousel = document.getElementById("product-carousel");
+                if (!carousel) return;
+                const images = carousel.querySelectorAll("img");
+
+                // Ensure images are loaded to calculate width correctly
+                Promise.all(Array.from(images).map(img => {
+                    if (img.complete) return Promise.resolve();
+                    return new Promise(resolve => { img.onload = resolve; img.onerror = resolve; });
+                })).then(() => {
+                    const items = gsap.utils.toArray(".carousel-item");
+                    if (items.length === 0) return;
+
+                    // Clone items for infinity
+                    items.forEach(item => carousel.appendChild(item.cloneNode(true)));
+
+                    // Re-query items after cloning
+                    const allItems = carousel.querySelectorAll('.carousel-item');
+                    const itemWidth = allItems[0].offsetWidth + 24; // 24 is gap
+                    const totalWidth = itemWidth * items.length;
+
+                    // GSAP Loop
+                    const tween = gsap.to(carousel, {
+                        x: `-=${totalWidth}`,
+                        duration: 25,
+                        ease: "linear",
+                        repeat: -1,
+                        modifiers: { x: gsap.utils.unitize(x => parseFloat(x) % totalWidth) }
+                    });
+
+                    // Hover Pause
+                    carousel.addEventListener("mouseenter", () => tween.pause());
+                    carousel.addEventListener("mouseleave", () => tween.resume());
+
+                    // Controls - Moved INSIDE the promise to access 'itemWidth' and 'tween'
+                    document.getElementById("carousel-prev").onclick = () => {
+                        gsap.to(carousel, { x: `+=${itemWidth}`, duration: 0.5, ease: "power2.out" });
+                    };
+                    document.getElementById("carousel-next").onclick = () => {
+                        gsap.to(carousel, { x: `-=${itemWidth}`, duration: 0.5, ease: "power2.out" });
+                    };
+
+                    // Buy Button Delegation
+                    carousel.addEventListener('click', (e) => {
+                        if (e.target.closest('.buy-btn')) toggleCart(true);
+                    });
+                });
+            };
+            initInfiniteCarousel();
+
+
+            // --- 5. OPTIMIZED THREE.JS ---
+            const initThree = () => {
+                const container = document.getElementById('care-3d-container');
+                if (!container) return;
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
+                camera.position.z = 6;
+
+                const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
+                container.appendChild(renderer.domElement);
+
+                // Geometries
+                const geo1 = new THREE.IcosahedronGeometry(2.2, 0);
+                const mat1 = new THREE.MeshBasicMaterial({ color: 0xAA9371, wireframe: true, transparent: true, opacity: 0.8 });
+                const mesh1 = new THREE.Mesh(geo1, mat1);
+
+                const geo2 = new THREE.OctahedronGeometry(1.2, 0);
+                const mat2 = new THREE.MeshBasicMaterial({ color: 0x524639, wireframe: true });
+                const mesh2 = new THREE.Mesh(geo2, mat2);
+
+                scene.add(mesh1, mesh2);
+
+                // Interactions
+                let mouseX = 0, mouseY = 0;
+                container.addEventListener('mousemove', e => {
+                    const rect = container.getBoundingClientRect();
+                    mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                    mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+                });
+
+                // Rendering Loop (Paused when not visible)
+                let isVisible = false;
+                const animate = () => {
+                    if (!isVisible) return;
+                    requestAnimationFrame(animate);
+
+                    mesh1.rotation.y += 0.003 + (mouseX * 0.05);
+                    mesh1.rotation.x += 0.002 - (mouseY * 0.05);
+                    mesh2.rotation.y -= 0.005;
+
+                    renderer.render(scene, camera);
+                };
+
+                // Intersection Observer for Performance
+                const observer = new IntersectionObserver((entries) => {
+                    isVisible = entries[0].isIntersecting;
+                    if (isVisible) animate();
+                }, { threshold: 0.1 });
+                observer.observe(container);
+
+                // Resize
+                window.addEventListener('resize', () => {
+                    if (!isVisible) return; // Don't calc resize if user isn't looking
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                });
+            };
+            initThree();
         });
-
-        // --- 2. INTERACTION LOGIC ---
-
-        // Mobile Menu
-        const mobileToggle = document.getElementById('mobile-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        function toggleMobileMenu() {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('flex');
-
-            // Icon Switch
-            const icon = mobileToggle.querySelector('i');
-            if (mobileMenu.classList.contains('hidden')) {
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars-staggered');
-                document.body.classList.remove('overflow-hidden'); // Restore scroll
-            } else {
-                icon.classList.remove('fa-bars-staggered');
-                icon.classList.add('fa-xmark');
-                document.body.classList.add('overflow-hidden'); // Lock scroll
-            }
-        }
-        mobileToggle.addEventListener('click', toggleMobileMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', toggleMobileMenu));
-
-        // Login Modal
-        const modal = document.getElementById('auth-modal');
-        const btns = [document.getElementById('login-btn'), document.getElementById('mobile-login-btn')];
-        const closeBtn = document.getElementById('close-modal');
-
-        function toggleModal(show) {
-            if (show) {
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                modal.querySelector('#modal-content').classList.remove('scale-95');
-                if (!mobileMenu.classList.contains('hidden')) toggleMobileMenu();
-            } else {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                modal.querySelector('#modal-content').classList.add('scale-95');
-            }
-        }
-        btns.forEach(b => b?.addEventListener('click', () => toggleModal(true)));
-        closeBtn.addEventListener('click', () => toggleModal(false));
-        document.getElementById('modal-backdrop').addEventListener('click', () => toggleModal(false));
-
-        // Cart Drawer
-        const cartDrawer = document.getElementById('cart-drawer');
-        const cartBtns = [document.getElementById('cart-btn'), document.getElementById('mobile-cart-btn')];
-        const closeCart = document.getElementById('close-cart');
-
-        function toggleCart(show) {
-            if (show) {
-                cartDrawer.classList.remove('translate-x-full');
-                if (!mobileMenu.classList.contains('hidden')) toggleMobileMenu();
-            } else { cartDrawer.classList.add('translate-x-full'); }
-        }
-        cartBtns.forEach(b => b?.addEventListener('click', () => toggleCart(true)));
-        closeCart.addEventListener('click', () => toggleCart(false));
-
-
-        // --- 4. PRODUCT SLIDER (With Unsplash Placeholders) ---
-        const products = [
-            { title: "Nomad Watch", category: "ACCESSORIES", desc: "Minimalist analog styling with smart connectivity.", price: "$299", image: "images/pan.jpeg" },
-            { title: "Brass Headphones", category: "AUDIO", desc: "Acoustic precision encased in antique brass.", price: "$450", image: "images/pan2.jpeg" },
-            { title: "Analog Camera", category: "PHOTOGRAPHY", desc: "Raw film character with modern reliability.", price: "$129", image: "images/pan3.jpeg" },
-            { title: "Ceramic Lens", category: "PROFESSIONAL", desc: "Precision ceramic glass engineered for heat resistance.", price: "$899", image: "images/pan4.jpeg" }
-        ];
-
-        let index = 0;
-        let isAnimating = false; // Debounce flag
-
-        const mainImage = document.getElementById("mainImage");
-        const mainTitle = document.getElementById("mainTitle");
-        const mainCategory = document.getElementById("mainCategory");
-        const mainDesc = document.getElementById("mainDesc");
-        const mainPrice = document.getElementById("mainPrice");
-        const cardList = document.getElementById("cardList");
-        const mainContent = document.getElementById("mainContent");
-
-        function renderCards() {
-            cardList.innerHTML = products.map((p, i) => `
-                <div data-i="${i}" class="relative flex-shrink-0 w-[140px] h-[200px] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border-2 ${i === index ? 'border-earth-brass scale-100 opacity-100' : 'border-transparent scale-95 opacity-60'}">
-                    <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover" />
-                    <div class="absolute inset-0 bg-black/20"></div>
-                </div>
-            `).join("");
-
-            cardList.querySelectorAll("[data-i]").forEach(card => {
-                card.onclick = () => slideTo(+card.dataset.i);
-            });
-        }
-
-        function updateMain(i) {
-            const p = products[i];
-            mainImage.src = p.image;
-            mainTitle.textContent = p.title;
-            mainCategory.textContent = p.category;
-            mainDesc.textContent = p.desc;
-            mainPrice.textContent = p.price;
-        }
-
-        function slideTo(i) {
-            if (isAnimating || i === index) return;
-            isAnimating = true;
-
-            const dir = i > index ? 1 : -1;
-            index = i;
-
-            // GSAP Transition
-            const tl = gsap.timeline({
-                onComplete: () => { isAnimating = false; }
-            });
-
-            tl.to(mainImage, { x: -50 * dir, opacity: 0, duration: 0.4, ease: "power2.in" })
-                .to(mainContent.children, { y: 20, opacity: 0, stagger: 0.05, duration: 0.3 }, "<")
-                .call(() => {
-                    updateMain(i);
-                    renderCards();
-                })
-                .fromTo(mainImage, { x: 50 * dir, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" })
-                .fromTo(mainContent.children, { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.05, duration: 0.4 }, "-=0.3");
-        }
-
-        updateMain(0);
-        renderCards();
-
-        document.getElementById("nextBtn").onclick = () => slideTo((index + 1) % products.length);
-        document.getElementById("prevBtn").onclick = () => slideTo((index - 1 + products.length) % products.length);
-
-
-        // --- 5. THREE.JS (Enhanced & Interactive) ---
-        const careContainer = document.getElementById('care-3d-container');
-        if (careContainer) {
-            const scene = new THREE.Scene();
-            // Transparent background
-
-            const camera = new THREE.PerspectiveCamera(50, careContainer.clientWidth / careContainer.clientHeight, 0.1, 1000);
-            camera.position.z = 6;
-
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(careContainer.clientWidth, careContainer.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            careContainer.appendChild(renderer.domElement);
-
-            // Outer Shape
-            const geo1 = new THREE.IcosahedronGeometry(2.2, 0);
-            const mat1 = new THREE.MeshBasicMaterial({ color: 0xAA9371, wireframe: true, transparent: true, opacity: 0.8 });
-            const mesh1 = new THREE.Mesh(geo1, mat1);
-            scene.add(mesh1);
-
-            // Inner Shape (Complexity)
-            const geo2 = new THREE.OctahedronGeometry(1.2, 0);
-            const mat2 = new THREE.MeshBasicMaterial({ color: 0x524639, wireframe: true });
-            const mesh2 = new THREE.Mesh(geo2, mat2);
-            scene.add(mesh2);
-
-            // Mouse Interaction
-            let mouseX = 0;
-            let mouseY = 0;
-            careContainer.addEventListener('mousemove', (e) => {
-                const rect = careContainer.getBoundingClientRect();
-                mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-                mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-            });
-
-            function animateCare() {
-                requestAnimationFrame(animateCare);
-
-                // Constant rotation
-                mesh1.rotation.y += 0.003;
-                mesh2.rotation.y -= 0.005;
-                mesh1.rotation.x += 0.002;
-
-                // Mouse influence (Parallax)
-                mesh1.rotation.y += mouseX * 0.05;
-                mesh1.rotation.x -= mouseY * 0.05;
-
-                renderer.render(scene, camera);
-            }
-            animateCare();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = careContainer.clientWidth / careContainer.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(careContainer.clientWidth, careContainer.clientHeight);
-            });
-        }
     </script>
-
-    <!-- luxury -->
-    <script>
-        const carousel = document.getElementById("product-carousel");
-        const items = gsap.utils.toArray(".carousel-item");
-
-        // Clone items once
-        items.forEach(item => {
-            carousel.appendChild(item.cloneNode(true));
-        });
-
-        const gap = 24; // gap-6
-        const itemWidth = items[0].offsetWidth + gap;
-        const totalWidth = itemWidth * items.length;
-
-        // Infinite loop tween
-        const carouselTween = gsap.to(carousel, {
-            x: `-=${totalWidth}`,
-            duration: 28,
-            ease: "linear",
-            repeat: -1,
-            modifiers: {
-                x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
-            }
-        });
-
-        // Pause on hover
-        carousel.addEventListener("mouseenter", () => carouselTween.pause());
-        carousel.addEventListener("mouseleave", () => carouselTween.resume());
-
-        // Manual controls
-        const step = itemWidth;
-        document.getElementById("carousel-prev").onclick = () => {
-            gsap.to(carousel, { x: `+=${step}`, duration: 0.6, ease: "power2.out" });
-        };
-        document.getElementById("carousel-next").onclick = () => {
-            gsap.to(carousel, { x: `-=${step}`, duration: 0.6, ease: "power2.out" });
-        };
-
-        // Buy Now (works on clones)
-        document.addEventListener("click", e => {
-            if (e.target.classList.contains("buy-btn")) {
-                toggleCart(true);
-            }
-        });
-    </script>
-
-
-
-
 </body>
 
 </html>
